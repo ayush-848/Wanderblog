@@ -1,0 +1,10 @@
+*{
+    margin : 0;
+    scroll-behavior: smooth;
+}
+
+#logo-img {
+    width : 50px;
+    object-fit: contain;
+    padding: 240px;;
+}
