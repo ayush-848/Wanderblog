@@ -1,0 +1,24 @@
+*{
+    padding: 5vw;
+    margin: auto;
+}
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10vh;
+    background-color: #ed9191;
+}
+.container-1{
+    display:flex;
+    flex-direction: row;
+}
+.account-Info{
+    background-color: #ef5f33;
+    padding: 5vw;
+}
+.details{
+    background-color: rgba(240, 240, 240, 0.899);
+    padding-right: 20vw;
+    padding-left: 2vw;
+}
