@@ -1,19 +1,17 @@
-*{
-    padding: 5vw;
-    margin: auto;
-}
 .container{
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 10vh;
     background-color: #ed9191;
+    padding: 5vw;
+    margin: auto;
 }
-.container-1{
+.container_1{
     display:flex;
     flex-direction: row;
 }
-.account-Info{
+.account_Info{
     background-color: #ef5f33;
     padding: 5vw;
 }

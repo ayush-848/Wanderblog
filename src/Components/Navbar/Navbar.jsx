@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Navbar.css'; // Import your navbar CSS for styling
-import Menu from '../../assets/hamburger.png'
+import Menu from '../../assets/hamburger.png';
+import { Link } from 'react-router-dom';
 
 function Navbar() {
     const [dropdownVisible, setDropdownVisible] = useState(false);
@@ -16,7 +17,7 @@ function Navbar() {
             </div>
 
             <ul className="navLinks">
-                <li><a href="/">Home</a></li>
+                <li><Link to='/'>Home</Link></li>
                 <li><a href="/blog">Blogs</a></li>
                 <li><a href="/community">Community</a></li>
                 <li><a href="/about">About</a></li>
@@ -31,7 +32,8 @@ function Navbar() {
                     onClick={toggleDropdown}
                 />
                 <div className={`dropdownContent ${dropdownVisible ? 'show' : ''}`}>
-                    <a href="/my-profile">My Profile</a>
+                    
+                    <Link to='/profile'>My Profile</Link>
                     <a href="/create-blog">Create a New Blog</a>
                     <a href="/settings">Settings</a>
                     <a href="/logout">Logout</a>
