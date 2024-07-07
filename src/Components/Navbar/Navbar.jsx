@@ -1,19 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Navbar.css'; // Import your navbar CSS for styling
-import Menu from '../../assets/hamburger.png';
 import { Link } from 'react-router-dom';
+import ProfileMenu from '../ProfileMenu/ProfileMenu.jsx';
 
 function Navbar() {
-    const [dropdownVisible, setDropdownVisible] = useState(false);
-
-    const toggleDropdown = () => {
-        setDropdownVisible(!dropdownVisible);
-    };
-
+    
     return (
         <nav className="navbar">
             <div className="logo">
-                <a href="/">Logo</a>
+                <img src="/src/assets/travel.png" className="navbar-logo"></img>
+                <Link to="/">WanderBlog</Link>
             </div>
 
             <ul className="navLinks">
@@ -24,21 +20,7 @@ function Navbar() {
                 <li><a href="/contact">Contact Us</a></li>
             </ul>
 
-            <div className="profileMenu">
-                <img
-                    src={Menu}
-                    alt="Profile"
-                    className="profilePic"
-                    onClick={toggleDropdown}
-                />
-                <div className={`dropdownContent ${dropdownVisible ? 'show' : ''}`}>
-                    
-                    <Link to='/profile'>My Profile</Link>
-                    <a href="/create-blog">Create a New Blog</a>
-                    <a href="/settings">Settings</a>
-                    <a href="/logout">Logout</a>
-                </div>
-            </div>
+            <ProfileMenu />
         </nav>
     );
 }

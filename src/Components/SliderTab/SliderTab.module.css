@@ -1,0 +1,72 @@
+.slider_tab {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 20px;
+    border: 2px solid #ccc; /* Border style for the slider tab */
+    border-radius: 8px;
+    overflow: hidden; /* Ensure children elements don't overflow */
+}
+
+.tab_content {
+    display: flex;
+    flex: 1;
+    align-items: center;
+}
+
+.tab_image {
+    flex: 1;
+}
+
+.tab_image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tab_info {
+    flex: 1;
+    padding: 0 20px; /* Adjust spacing between image and info */
+}
+
+.tab_info h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.tab_icons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Adjust spacing between icons */
+}
+
+.tab_icon {
+    padding: 10px;
+    background-color: #f0f0f0;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.tab_icon.active {
+    background-color: #007bff; /* Active icon background color */
+    color: #fff; /* Active icon text color */
+}
+
+.prev_btn,
+.next_btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 0 10px;
+}
+
+.prev_btn:hover,
+.next_btn:hover {
+    background-color: #0056b3; /* Darker shade of primary color on hover */
+}
