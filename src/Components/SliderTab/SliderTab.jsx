@@ -1,17 +1,42 @@
 import React, { useState } from 'react';
 import styles from './SliderTab.module.css';
-
+import { FaArrowAltCircleLeft } from 'react-icons/fa';
+import { FaArrowAltCircleRight } from 'react-icons/fa';
 
 const SliderTab = () => {
     const [activeTab, setActiveTab]= useState(0);
 
     const tabs = [
         {
-            image: '/src/assets/Logi_Dios.png',
+            image: '/src/assets/Egypt.jpeg',
             info: 'Info about tab 1',
         },
         {
-            image: 'src/assets/TS_GLUTTONY_NIMURU_02.png',
+            image: 'src/assets/France.jpg',
+            info: 'Info about tab 1',
+        },
+        {
+            image: 'src/assets/Indonesia.jpg',
+            info: 'Info about tab 1',
+        },
+        {
+            image: 'src/assets/Japan.jpg',
+            info: 'Info about tab 1',
+        },
+        {
+            image: 'src/assets/Singapore.jpg',
+            info: 'Info about tab 1',
+        },
+        {
+            image: 'src/assets/Spain.jpg',
+            info: 'Info about tab 1',
+        },
+        {
+            image: 'src/assets/Srilanka.png',
+            info: 'Info about tab 1',
+        },
+        {
+            image: 'src/assets/Switzerland.jpeg',
             info: 'Info about tab 1',
         },
     ];
@@ -26,13 +51,11 @@ const SliderTab = () => {
         setActiveTab(newIndex);
     };
 
-    const handleTabClick= (index) => {
-        setActiveTab(index);
-    }
-
     return (
         <div className= {styles.slider_tab}>
-            <button className= {styles.prev_btn} onClick={goToPrevTab}>Prev</button>
+            <button className= {styles.prev_btn} onClick={goToPrevTab}>
+                <FaArrowAltCircleLeft style={{fontSize: '25px'}} />
+            </button>
 
             <div className= {styles.tab_content}>
                 <div className= {styles.tab_image}>
@@ -45,7 +68,9 @@ const SliderTab = () => {
                 </div>
 
             </div>
-            <button className= {styles.next_btn} onClick={goToNextTab}>Next</button>
+            <button className= {styles.next_btn} onClick={goToNextTab}>
+                <FaArrowAltCircleRight style={{fontSize: '25px'}} />
+            </button>
 
             
         </div>
