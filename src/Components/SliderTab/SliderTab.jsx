@@ -3,14 +3,14 @@ import { FaCaretLeft, FaCaretRight } from "react-icons/fa";
 import styles from './SliderTab.module.css';
 
 // Import images
-import France from 'src/assets/France.jpg';
-import Indonesia from 'src/assets/Indonesia.jpg';
-import Egypt from 'src/assets/Egypt.jpeg';
-import Japan from 'src/assets/Japan.jpg';
-import Singapore from 'src/assets/Singapore.jpg';
-import Spain from 'src/assets/Spain.jpg';
-import Srilanka from 'src/assets/Srilanka.png';
-import Turkey from 'src/assets/Turkey.jpg';
+import France from '../../assets/France.jpg';
+import Indonesia from '../../assets/Indonesia.jpg';
+import Egypt from '../../assets/Egypt.jpeg';
+import Japan from '../../assets/Japan.jpg';
+import Singapore from '../../assets/Singapore.jpg';
+import Spain from '../../assets/Spain.jpg';
+import Srilanka from '../../assets/SriLanka.jpg';
+import Turkey from '../../assets/Turkey.jpg';
 
 const imagesAndTexts = [
     {
