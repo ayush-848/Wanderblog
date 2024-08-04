@@ -4,7 +4,7 @@ import styles from './SliderTab.module.css';
 
 const imagesAndTexts = [
     {
-        image: 'src/assets/France.jpg',
+        image: '../../assets/France.jpg',
         title: 'Discover France: A Symphony of Elegance and Heritage',
         description: 'Welcome to France, a country celebrated for its sophistication and charm. Stroll through Paris, the City of Lights, and admire the iconic Eiffel Tower, Louvre Museum, and Notre-Dame Cathedral. Explore the picturesque villages of Provence, the scenic vineyards of Bordeaux, and the glamorous French Riviera. Immerse yourself in rich history at castles like Château de Chambord and indulge in world-renowned cuisine and wine. From the stunning landscapes of the Alps to the artistic ambiance of Montmartre, France offers a perfect blend of culture, beauty, and culinary delights. An enchanting journey awaits in this timeless destination.',
         background: 'src/assets/France.jpg'
