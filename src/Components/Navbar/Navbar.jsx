@@ -2,13 +2,13 @@ import React from 'react';
 import './Navbar.css'; // Import your navbar CSS for styling
 import { Link } from 'react-router-dom';
 import ProfileMenu from '../ProfileMenu/ProfileMenu.jsx';
+import logo from '../../assets/travel.png'; // Import the image
 
 function Navbar() {
-    
     return (
         <nav className="navbar">
             <div className="logo">
-                <img src="/src/assets/travel.png" className="navbar-logo"></img>
+                <img src={logo} alt="WanderBlog Logo" className="navbar-logo" />
                 <Link to="/">WanderBlog</Link>
             </div>
 
