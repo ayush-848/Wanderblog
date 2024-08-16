@@ -1,8 +1,15 @@
-# React + Vite
+# Wanderblog
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to the **Wanderblog** project! This repository contains the source code for a fully functional blog website built using modern web development technologies.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Create, edit, and delete blog posts
+- User authentication (login, registration)
+- Commenting on posts
+- Responsive design
+- Markdown support for writing posts
+- Search functionality
+- Pagination for blog posts
+
+## Technologies Used
