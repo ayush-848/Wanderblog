@@ -1,85 +1,79 @@
-*{
+footer {
     margin: 0;
     padding: 0;
-    font-family: 'poppins', sans-serif;
+    font-family: 'Poppins', sans-serif;
     box-sizing: border-box;
-}
-
-body{
-    background: #eef8ff;
-
-}
-
-footer{
-   /* height: 30px;*/
-    width: 100%;
-    position:absolute ;
-    bottom: 0 ;
     background: linear-gradient(to right, #00093c, #2d0b00);
     color: #fff;
-    padding: 100px 0 30px;
+    padding: 50px 0 30px;
     border-top-left-radius: 125px;
     font-size: 13px;
     line-height: 20px;
-
+    width: 100%;
 }
 
-.row{
-    width: 85%;
-    margin: auto;
+.grid_container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    align-content: center;
+    gap: 10px;
+}
+
+.logo_col {
+    grid-column: 1 / 2;
     display: flex;
-    flex-wrap: wrap;
+    justify-content: flex-start;
     align-items: flex-start;
-    justify-content: space-between;
+    padding-top: 10px;
 }
 
-.col{
-    flex-basis: 25%;
-    padding: 10px;
-}
-
-.col:nth-child(2), .col:nth-child(3){
-    flex-basis: 15%;
-}
-
-.logo{
+.logo {
     width: 80px;
-    margin-bottom: 30px;
 }
 
-/*.logo{
-    width: 3%; 
-    min-height: 50px; /
-    position: absolute; 
-    top: 30px; 
-    left: 40px
-}*/
+.office_col {
+    grid-column: 2 / 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
 
+.links_col {
+    grid-column: 3 / 4;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
 
-.col h3{
-    width: fit-content;
-    margin-bottom: 40px;
+.newsletter_col {
+    grid-column: 4 / 5;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+h3 {
+    margin-bottom: 20px;
     position: relative;
 }
 
-.email-id{
+.email-id {
     width: fit-content;
-    margin-left: 100%;
     border-bottom: 1px solid #ccc;
-    margin: 20px;
+    margin: 20px 0;
 }
 
-ul li{
+ul li {
     list-style: none;
     margin-bottom: 12px;
 }
 
-ul li a{
+ul li a {
     text-decoration: none;
     color: #fff;
 }
 
-form{
+form {
     padding-bottom: 15px;
     display: flex;
     align-items: center;
@@ -88,12 +82,12 @@ form{
     margin-bottom: 50px;
 }
 
-form .fa-regular{
+form .fa-regular {
     font-size: 18px;
     margin-right: 10px;
 }
 
-form input{
+form input {
     width: 100%;
     background: transparent;
     color: #ccc;
@@ -101,7 +95,7 @@ form input{
     outline: none;
 }
 
-form button{
+form button {
     background: transparent;
     border: 0;
     outline: none;
@@ -113,7 +107,11 @@ form button .fa-solid {
     color: #ccc;
 }
 
-.social-icons .fa-brands{
+.social-icons {
+    margin-top: 20px;
+}
+
+.social-icons .fa-brands {
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -126,7 +124,7 @@ form button .fa-solid {
     cursor: pointer;
 }
 
-hr{
+hr {
     width: 90%;
     border: 0;
     border-bottom: 1px solid #ccc;
@@ -137,7 +135,7 @@ hr{
     text-align: center;
 }
 
- .underline {
+.underline {
     width: 100%;
     height: 5px;
     background: #767676;
@@ -159,12 +157,11 @@ hr{
     animation: moving 2s linear infinite;
 }
 
-
 @keyframes moving {
-    0%{
+    0% {
         left: -20px;
     }
-    100%{
+    100% {
         left: 100%;
-    }
+  }
 }
