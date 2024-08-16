@@ -1,6 +1,7 @@
 import React from 'react';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import styles from './footer.module.css'; // Import the CSS module
+import travel_logo from '../../assets/travel.png';
 
 const Footer = () => {
   return (
@@ -8,7 +9,7 @@ const Footer = () => {
       <div className={styles.grid_container}>
 
         <div className={styles.logo_col}>
-          <img src="/src/assets/travel.png" className={styles.logo} alt="Wanderblog Logo" />
+          <img src= {travel_logo} className={styles.logo} alt="Wanderblog Logo" />
         </div>
 
         <div className={styles.office_col}>
