@@ -1,78 +1,74 @@
-/* VideoText.module.css */
+/* Intro.module.css */
 
 .videoTextContainer {
-  position: relative;
-  width: 100%;
-  height: 100vh; /* Full viewport height */
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-left: 30px;
-  margin-right: 30px;
-
-}
-
-.videoWrapper {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 80%;
-  overflow: hidden;
-}
-
-.backgroundVideo {
-  width: 100%;
-  max-width: 1450px;
-  height: 100%;
-  object-fit: cover;
-  z-index: -1;
-  border-radius: 20px;
-}
-
-.textOverlay {
-  position: absolute;
-  top: 40%;
-  left: 48.5%;
-  transform: translate(-50%, -50%);
-  color: white;
-  text-align: center;
-  z-index: 1;
-  font-family: 'Times New Roman', serif; /* Custom font */
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); 
-  font-size: larger;
-}
-
-.fadeInText {
-  opacity: 0;
-  animation: fadeIn 3s ease-in forwards;
-}
-
-.textOverlay p {
-  margin: 20px 0; /* Vertical margins (top and bottom) */
-  padding: 10px; /* Space inside the paragraph */
-}
-
-/* Specific font size for the title */
-.fadeInTextTitle {
-  font-size: 4em; /* Set your desired font size */
-  font-weight: bold; /* Optional: Make the text bold */
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Optional: Add shadow */
-}
-
-.fadeInTextTitle2 {
-  font-size: 25px; /* Set your desired font size */
-  font-weight: italic; /* Optional: Make the text bold */
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Optional: Add shadow */
-}
-
-
-@keyframes fadeIn {
-  0% {
+    position: relative;
+    width: 100%;
+    max-width: 1450px;
+    height: 95vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 40px;
+  }
+  
+  .videoWrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+  
+  .backgroundVideo {
+    width: 100%;
+    height: 90%;
+    object-fit: cover;
+    z-index: -1;
+    border-radius: 20px;
+  }
+  
+  .textOverlay {
+    position: absolute;
+    top: 40%;
+    left: 48.5%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-align: center;
+    z-index: 1;
+    max-width: 80%; /* To ensure text doesn’t stretch too wide */
+    font-family: 'Times New Roman', Times, serif;
+  }
+  
+  .fadeInText {
     opacity: 0;
+    animation: fadeIn 3s ease-in forwards;
   }
-  100% {
-    opacity: 1;
+  
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(20px); /* Optional: Add a sliding effect */
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0); /* Final position */
+    }
   }
-}
+  
+  .fadeInTextTitle {
+    font-size: 4em; /* Main title font size */
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    margin-bottom: 20px;
+  }
+  
+  .fadeInTextTitle2 {
+    font-size: 1.5em; /* Subtitle font size */
+    font-weight: 300;
+    margin-top: 10px;
+    line-height: 1.5; /* Line spacing for better readability */
+  }
+  
