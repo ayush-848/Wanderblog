@@ -3,6 +3,8 @@
 import Hero from './Components/Hero/Hero';
 import Navbar from './Components/Navbar/Navbar'; // Import Navbar as default
 import SliderTab from './Components/SliderTab/SliderTab';
+import Intro from './Components/Intro/Intro';
+
 
 function App() {
   return (
@@ -10,6 +12,10 @@ function App() {
       <Navbar />
       <Hero/>
       <br></br>
+
+      <Intro />
+      <br></br>
+      
       <SliderTab />
       <br></br>
     </div>
