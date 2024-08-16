@@ -7,6 +7,7 @@ footer {
     color: #fff;
     padding: 50px 0 30px;
     border-top-left-radius: 125px;
+    border-top-right-radius: 125px;
     font-size: 13px;
     line-height: 20px;
     width: 100%;
@@ -24,7 +25,7 @@ footer {
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
-    padding-top: 10px;
+    padding-left: 20px;
 }
 
 .logo {
@@ -36,6 +37,11 @@ footer {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    font-size: 16px;
+}
+
+.office_details{
+    line-height: 1.6;
 }
 
 .links_col {
@@ -43,6 +49,7 @@ footer {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    font-size: 16px;
 }
 
 .newsletter_col {
@@ -72,57 +79,63 @@ ul li a {
     text-decoration: none;
     color: #fff;
 }
-
-form {
-    padding-bottom: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid #ccc;
-    margin-bottom: 50px;
+  
+.newsletter_col h3 {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  font-size: 18.72px;
 }
 
-form .fa-regular {
-    font-size: 18px;
-    margin-right: 10px;
+.newsletter_col form {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
-form input {
-    width: 100%;
-    background: transparent;
-    color: #ccc;
-    border: 0;
-    outline: none;
+.newsletter_col form i {
+  font-size: 24px;
+  margin-right: 10px; /* Space between the envelope icon and input field */
 }
 
-form button {
-    background: transparent;
-    border: 0;
-    outline: none;
-    cursor: pointer;
+.newsletter_col form input {
+  flex: 0 1 200px; /* Allow input field to grow and fill available space */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
 }
 
-form button .fa-solid {
-    font-size: 16px;
-    color: #ccc;
+.newsletter_col form button {
+  background-color: #007bff; /* Adjust color as needed */
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 10px; /* Space between the input field and the button */
+  
 }
 
-.social-icons {
-    margin-top: 20px;
+.newsletter_col form button i {
+  font-size: 18px; /* Adjust the icon size if needed */
+  color: #fff; /* Adjust the icon color to contrast with the button */
 }
 
-.social-icons .fa-brands {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    text-align: center;
-    line-height: 40px;
-    font-size: 20px;
-    color: #000;
-    background: #fff;
-    margin-right: 15px;
-    cursor: pointer;
+.social_icons {
+  display: flex;
+  gap: 15px; /* Space between social media icons */
+  font-size: 24px;
 }
+
+.social_icons i {
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.social_icons i:hover {
+  color: #007bff; /* Adjust color on hover */
+}
+
 
 hr {
     width: 90%;
@@ -136,7 +149,7 @@ hr {
 }
 
 .underline {
-    width: 100%;
+    width: 85%;
     height: 5px;
     background: #767676;
     border-radius: 3px;
@@ -156,6 +169,7 @@ hr {
     left: 10px;
     animation: moving 2s linear infinite;
 }
+
 
 @keyframes moving {
     0% {
