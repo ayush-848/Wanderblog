@@ -1,0 +1,25 @@
+name: Issue Creation Commenter
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  issues: write
+
+jobs:
+  comment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Add comment
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const creator = context.payload.issue.user.login;
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `Hello @${creator}!\n\nThank you for creating this issue! Our team will review it as soon as possible. In the meantime, please make sure you have provided all necessary information to help us understand and address your concern.`
+            });
