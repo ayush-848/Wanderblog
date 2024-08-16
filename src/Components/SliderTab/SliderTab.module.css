@@ -12,6 +12,7 @@
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   background: transparent; /* Ensure the background is transparent for the blur wrapper */
+  padding-right: 30px;
 }
 
 .blurWrapper {
@@ -62,7 +63,7 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(235, 12, 12, 0.803);
   color: #fff;
   border: none;
   padding: 10px;
@@ -74,23 +75,29 @@
   justify-content: center;
   width: 40px;
   height: 40px;
+  transition: background-color 0.3s ease; /* Smooth background color transition */
 }
 
 .arrowIcon {
-  font-size: 30px; /* Adjust the size of the icons */
+  font-size: 20px; /* Adjust the size of the icons */
 }
 
 .prevArrow {
-  left: -15px; /* Move the button outside the main slider area */
+  left: 0px; /* Adjust position relative to the slider area */
 }
 
 .nextArrow {
-  right: -15px; /* Move the button outside the main slider area */
+  right: 0px; /* Adjust position relative to the slider area */
 }
 
 .prevArrow:hover,
 .nextArrow:hover {
   background-color: rgba(0, 0, 0, 0.7);
+}
+
+.prevArrow:focus,
+.nextArrow:focus {
+  outline: none; /* Remove default focus outline */
 }
 
 .dots {
