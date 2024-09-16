@@ -24,6 +24,5 @@ app.use('/api/auth', require('./routes/auth')); // Register auth routes
 // Serve uploaded profile pictures
 app.use('/uploads', express.static('uploads'));
 
-// Start the server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
