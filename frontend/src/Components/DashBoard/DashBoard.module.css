@@ -1,22 +1,123 @@
-.container{
+.container {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    background: #f4f4f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .profileSection {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+  
+  .profileHeader {
+    display: flex;
     align-items: center;
-    padding: 10vh;
-    background-color: #ed9191;
-    padding: 5vw;
-    margin: auto;
-}
-.container_1{
-    display:flex;
-    flex-direction: row;
-}
-.account_Info{
-    background-color: #ef5f33;
-    padding: 5vw;
-}
-.details{
-    background-color: rgba(240, 240, 240, 0.899);
-    padding-right: 20vw;
-    padding-left: 2vw;
-}
+    margin-bottom: 20px;
+  }
+  
+  .profileImg img {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+  }
+  
+  .greeting {
+    margin-left: 20px;
+    font-size: 18px;
+    color: #333;
+  }
+  
+  .accountDetails {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .accountName {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .accountEmail,
+  .accountNumber,
+  .accountLastLogin {
+    font-size: 16px;
+    color: #666;
+  }
+  
+  .editProfileBtn {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+  }
+  
+  .editProfileBtn:hover {
+    background: #0056b3;
+  }
+  
+  .profileCompletion {
+    margin-top: 20px;
+  }
+  
+  .progressBar {
+    background: #e9ecef;
+    border-radius: 4px;
+    height: 8px;
+    width: 100%;
+    overflow: hidden;
+    margin-top: 5px;
+  }
+  
+  .progress {
+    background: #28a745;
+    height: 100%;
+    transition: width 0.3s ease;
+  }
+  
+  .detailsSection {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+  }
+  
+  .detailsSection > div {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  h3 {
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  ul li {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 5px;
+  }
+  
+  .notifications {
+    margin-top: 20px;
+  }
+  
