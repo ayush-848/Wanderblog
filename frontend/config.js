@@ -2,23 +2,28 @@ const isBrowser = typeof window !== 'undefined';
 
 export const getApiUrl = () => {
   let apiUrl;
+
   if (isBrowser) {
-    // Check if the app is being served from the Vercel or custom domain
-    if (window.location.hostname === 'www.wanderblog.xyz') {
+    // Running in the browser
+    const hostname = window.location.hostname;
+
+    if (hostname === 'www.wanderblog.xyz') {
       apiUrl = 'https://www.wanderblog.xyz/api';
-    } else if (window.location.hostname === 'wanderblog-ayush-debs-projects.vercel.app') {
+    } else if (hostname === 'wanderblog-ayush-debs-projects.vercel.app') {
       apiUrl = 'https://wanderblog-ayush-debs-projects.vercel.app/api';
     } else {
-      // Default fallback if none match
+      // Use localhost for local development in the browser
       apiUrl = 'http://localhost:5173/api';
     }
   } else {
-    // Fallback for non-browser environments (e.g., SSR)
+    // Running in a non-browser environment (like server-side rendering)
+    // Use environment variables for production or development environments
     apiUrl = process.env.VITE_API_URL || 'http://localhost:5173/api';
   }
-  
-  console.log('API URL:', apiUrl);
+
+  console.log('API URL:', apiUrl); // Debugging: Remove this in production
   return apiUrl;
 };
 
+// Export a constant API URL for use in the application
 export const API_URL = getApiUrl();
