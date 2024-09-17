@@ -4,7 +4,6 @@ import Hero from './Components/Hero/Hero';
 import Navbar from './Components/Navbar/Navbar'; // Import Navbar as default
 import SliderTab from './Components/SliderTab/SliderTab';
 import Intro from './Components/Intro/Intro';
-import Footer from './Components/Footer/Footer';
 
 function App() {
   return (
@@ -15,7 +14,6 @@ function App() {
       <Intro />
       <SliderTab />
       <br />
-      <Footer />
     </div>
   );
 }
