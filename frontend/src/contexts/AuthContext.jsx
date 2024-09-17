@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { API_URL } from '../../config';
+import { API_URL } from '../config';
 
 export const AuthContext = createContext(null);
 
@@ -51,11 +51,12 @@ export const AuthProvider = ({ children }) => {
         setIsAuthenticated(true);
         return true;
       } else {
-        throw new Error('Login failed');
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Login failed');
       }
     } catch (error) {
       console.error('Login error:', error);
-      return false;
+      throw error;
     }
   };
 
@@ -69,41 +70,31 @@ export const AuthProvider = ({ children }) => {
         body: JSON.stringify(userData),
       });
       
+      console.log('Registration response:', response);
+      console.log('Response status:', response.status);
+      const responseBody = await response.text();
+      console.log('Response body:', responseBody);
+
       if (response.ok) {
-        const data = await response.json();
+        const data = JSON.parse(responseBody);
         localStorage.setItem('token', data.token);
         setUser(data.user);
         setIsAuthenticated(true);
         return true;
       } else {
-        throw new Error('Registration failed');
+        const errorData = JSON.parse(responseBody);
+        throw new Error(errorData.error || 'Registration failed');
       }
     } catch (error) {
       console.error('Registration error:', error);
-      return false;
+      throw error;
     }
   };
 
-  const logout = async () => {
-    try {
-      // Send a request to the backend to invalidate the session or token
-      await fetch(`${API_URL}/logout`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-  
-      // Clear the token and user data from localStorage
-      localStorage.removeItem('token');
-      setUser(null);
-      setIsAuthenticated(false);
-      
-      // Optionally, redirect the user or show a notification
-      // e.g., history.push('/login');
-    } catch (error) {
-      console.error('Logout error:', error);
-    }
+  const logout = () => {
+    localStorage.removeItem('token');
+    setUser(null);
+    setIsAuthenticated(false);
   };
 
   const updateProfile = async (updates) => {
@@ -127,7 +118,7 @@ export const AuthProvider = ({ children }) => {
       }
     } catch (error) {
       console.error('Profile update error:', error);
-      return false;
+      throw error;
     }
   };
 

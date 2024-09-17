@@ -4,12 +4,20 @@ const { generateToken } = require('../utils/jwt');
 exports.register = async (req, res) => {
   try {
     const { firstName, lastName, email, phone, password } = req.body;
+
+    // Check if user already exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ error: 'User with this email already exists' });
+    }
+
     const user = new User({ firstName, lastName, email, phone, password });
     await user.save();
     const token = generateToken(user._id);
-    res.status(201).send({ user, token });
+    res.status(201).json({ user: user.toJSON(), token });
   } catch (error) {
-    res.status(400).send(error);
+    console.error('Registration error:', error);
+    res.status(400).json({ error: error.message || 'Registration failed' });
   }
 };
 

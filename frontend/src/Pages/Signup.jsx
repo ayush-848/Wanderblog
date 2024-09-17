@@ -1,3 +1,4 @@
+// src/components/SignUp.js
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
@@ -11,7 +12,8 @@ const SignUp = () => {
     password: '',
     confirmPassword: '',
   });
-  const { signup } = useAuth();
+  const [error, setError] = useState('');
+  const { register } = useAuth();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -20,22 +22,24 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
     if (formData.password !== formData.confirmPassword) {
-      alert("Passwords don't match");
+      setError("Passwords don't match");
       return;
     }
     try {
-      await signup(formData);
+      await register(formData);
       navigate('/profile');
     } catch (error) {
       console.error('Signup failed:', error);
-      // Handle error (e.g., show error message to user)
+      setError(error.message || 'Registration failed. Please try again.');
     }
   };
 
   return (
     <div className="signup-container">
       <h2>Sign Up</h2>
+      {error && <div className="error-message">{error}</div>}
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="firstName">First Name:</label>
