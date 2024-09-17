@@ -14,17 +14,6 @@ connectDB();
 app.use(express.static(path.join(__dirname, '../frontend/dist')));
 
 
-const allowedOrigins = ['https://www.wanderblog.xyz', 'https://wanderblog-ayush-debs-projects.vercel.app'];
-
-app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-}));
 
 
 // Middleware
