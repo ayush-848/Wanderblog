@@ -10,11 +10,11 @@ export const getApiUrl = () => {
       apiUrl = 'https://wanderblog-ayush-debs-projects.vercel.app/api';
     } else {
       // Default fallback if none match
-      apiUrl = 'http://localhost:3000/api';
+      apiUrl = 'http://localhost:5173/api';
     }
   } else {
     // Fallback for non-browser environments (e.g., SSR)
-    apiUrl = process.env.VITE_API_URL || 'http://localhost:3000/api';
+    apiUrl = process.env.VITE_API_URL || 'http://localhost:5173/api';
   }
   
   console.log('API URL:', apiUrl);
