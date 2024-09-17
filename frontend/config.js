@@ -1,24 +1,16 @@
+// Check if running in a browser environment
 const isBrowser = typeof window !== 'undefined';
 
+// Function to get API URL
 export const getApiUrl = () => {
   let apiUrl;
 
   if (isBrowser) {
-    // Running in the browser
-    const hostname = window.location.hostname;
-
-    if (hostname === 'www.wanderblog.xyz') {
-      apiUrl = 'https://www.wanderblog.xyz/api';
-    } else if (hostname === 'wanderblog-ayush-debs-projects.vercel.app') {
-      apiUrl = 'https://wanderblog-ayush-debs-projects.vercel.app/api';
-    } else {
-      // Use localhost for local development in the browser
-      apiUrl = 'http://localhost:5173/api';
-    }
+    // Running in the browser, use environment variable
+    apiUrl = import.meta.env.VITE_API_URL;
   } else {
-    // Running in a non-browser environment (like server-side rendering)
-    // Use environment variables for production or development environments
-    apiUrl = process.env.VITE_API_URL || 'http://localhost:5173/api';
+    // Running server-side (like server-side rendering), use environment variable
+    apiUrl = process.env.VITE_API_URL;
   }
 
   console.log('API URL:', apiUrl); // Debugging: Remove this in production
