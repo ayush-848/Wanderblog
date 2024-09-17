@@ -1,7 +1,6 @@
 // Check if running in a browser environment
 const isBrowser = typeof window !== 'undefined';
 
-// Function to get API URL
 export const getApiUrl = () => {
   let apiUrl;
 
@@ -17,5 +16,4 @@ export const getApiUrl = () => {
   return apiUrl;
 };
 
-// Export a constant API URL for use in the application
 export const API_URL = getApiUrl();

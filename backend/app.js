@@ -3,6 +3,7 @@ const cors = require('cors');
 const connectDB = require('./config/database');
 const userRoutes = require('./routes/userRoutes');
 const path = require('path');
+require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -18,12 +19,18 @@ connectDB().then(() => {
 app.use((req, res, next) => {
   console.log(`Request Method: ${req.method}`);
   console.log(`Request URL: ${req.url}`);
-  console.log(`Request Headers: ${JSON.stringify(req.headers)}`);
   next();
 });
 
 // Configure CORS
-const allowedOrigins = ['https://www.wanderblog.xyz', 'https://wanderblog-ayush-debs-projects.vercel.app'];
+const allowedOrigins = [
+  'https://www.wanderblog.xyz',
+  'https://wanderblog-ayush-debs-projects.vercel.app',
+  'http://localhost:3000',    // Ensure localhost is included
+  process.env.FRONT_END_URL
+];
+
+
 
 app.use(cors({
   origin: function (origin, callback) {
