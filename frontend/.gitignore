@@ -23,7 +23,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-.vercel
 
 # dotenv environment variables
 .env
