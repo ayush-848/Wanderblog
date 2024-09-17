@@ -28,7 +28,7 @@
     background-color: #fff;
     min-width: 160px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 1;
+    z-index: 1000; /* Ensure dropdown is above other content */
     border-radius: 4px;
     overflow: hidden;
     transition: opacity 0.3s ease, transform 0.3s ease;
@@ -41,32 +41,19 @@
     transform: scaleY(1); /* Scale vertically to show dropdown */
 }
 
-.dropdownContent a {
+.dropdownContent a, .dropdownContent button {
     color: #333;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
     white-space: nowrap;
     transition: background-color 0.3s ease, color 0.3s ease; /* Smooth hover transitions */
-}
-
-.dropdownContent a:hover {
-    background-color: #afecf1; /* Light background color on hover */
-    color: #000; /* Darken text color on hover */
-}
-
-.dropdownContent button {
-    color: #333;
-    padding: 12px 16px;
     border: none;
     background: none;
-    text-align: left;
     cursor: pointer;
-    width: 100%;
-    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth hover transitions */
 }
 
-.dropdownContent button:hover {
+.dropdownContent a:hover, .dropdownContent button:hover {
     background-color: #afecf1; /* Light background color on hover */
     color: #000; /* Darken text color on hover */
 }
@@ -74,14 +61,29 @@
 .userInfo {
     padding: 10px;
     border-bottom: 1px solid #eee;
-  }
-  
-  .userName {
+}
+
+.userName {
     font-weight: bold;
     margin-bottom: 5px;
-  }
-  
-  .userEmail {
+}
+
+.userEmail {
     font-size: 0.9em;
     color: #666;
+}
+
+.logoutButton {
+    background: none;
+    border: none;
+    color: #007bff;
+    cursor: pointer;
+    font-size: 16px;
+    text-decoration: underline;
+    padding: 0;
   }
+  
+  .logoutButton:hover {
+    color: #0056b3;
+  }
+  
