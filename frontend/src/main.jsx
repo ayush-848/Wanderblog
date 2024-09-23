@@ -8,8 +8,8 @@ import Login from './Pages/Login.jsx';
 import SignUp from './Pages/Signup.jsx';
 import Logout from './Pages/Logout.jsx';
 import NotFound from './Pages/NotFound.jsx';
-import PrivateRoute from './Components/PrivateRoute/PrivateRoute.jsx';
-import './App.css';
+import PrivateRoute from './Components/PrivateRoute.jsx';
+import './index.css';
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
