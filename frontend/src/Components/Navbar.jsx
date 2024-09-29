@@ -8,8 +8,8 @@ function Navbar() {
         <nav className="absolute top-0 left-0 w-full z-10 bg-black bg-opacity-30 flex justify-between p-3.5">
             {/* Logo Section */}
             <div className="flex items-center w-24">
-                <img src={logo} alt="WanderBlog Logo" className="h-6 w-auto mr-2" />
-                <Link to="/" className="text-white text-xl font-bold transition-colors duration-300 hover:text-gray-300">
+                <img src={logo} alt="WanderBlog Logo" className="h-10 w-auto mr-2" />
+                <Link to="/" className="text-white text-3xl font-bold transition-colors duration-300 hover:text-gray-300">
                     WanderBlog
                 </Link>
             </div>
