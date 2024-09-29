@@ -114,7 +114,9 @@ const Login = () => {
                       <button type="button" className="mr-4 text-sm font-medium text-purple-blue-500">Forget password?</button>
                     </div>
                     <button className="w-full px-6 py-5 mb-5 text-sm font-bold leading-none text-white transition duration-300 md:w-96 rounded-2xl hover:bg-purple-blue-600 focus:ring-4 focus:ring-purple-blue-100 bg-purple-blue-500">Sign In</button>
-                    <p className="text-sm leading-relaxed text-grey-900">Not registered yet? <button type="button" className="font-bold text-grey-700">Create an Account</button></p>
+                    <p className="text-sm leading-relaxed text-grey-900">Not registered yet? 
+                      <a href='/signup'><button type="button" className="font-bold text-grey-700">Create an Account</button></a>
+                    </p>
                   </form>
                 </div>
               </div>
