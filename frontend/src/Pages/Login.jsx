@@ -65,8 +65,8 @@ const Login = () => {
           </p>
         </div> */}
   
-        <div className="expt overscroll-none">
-          <div className="container flex flex-col mx-auto bg-white rounded-lg pt-10 my-5">
+        <div className="expt overscroll-none p-0 mx-0">
+          <div className="container w-full min-w-full h-screen flex flex-col bg-white mx-0 mr-0">
             <div className="flex justify-center w-full my-auto xl:gap-14 lg:justify-normal md:gap-5">
               <div className="flex items-center justify-center w-full lg:p-10">
                 <div className="flex items-center xl:p-10">
