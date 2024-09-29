@@ -125,7 +125,7 @@ const SignUp = () => {
           <div className='flex items-center justify-center py-4'>
             <button
               type="submit"
-              className='border-2 border-gray-700 w-full h-12 rounded-lg cursor-pointer hover:bg-purple-700 hover:text-white transition-colors duration-500 delay-50 font-Outfit text-lg'
+              className='border-2 border-gray-700 w-full h-12 rounded-lg cursor-pointer hover:bg-purple-700 hover:text-white transition-colors duration-500 delay-50 font-Outfit text-lg bg-cyan-600 font-semibold text-white'
             >
               Sign Up
             </button>
@@ -135,7 +135,7 @@ const SignUp = () => {
 
         <p className='font-Outfit text-xl mt-2'>
           Already have an account?  
-          <Link to="/login" className='mx-2 text-decoration: underline hover:text-sky-500'>Login</Link>
+          <Link to="/login" className='mx-2 text-cyan-600 text-decoration: underline hover:text-purple-500'>Login</Link>
         </p>
       </div>
 
