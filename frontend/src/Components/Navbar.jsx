@@ -32,11 +32,6 @@ function Navbar() {
                     </a>
                 </li>
                 <li>
-                    <a href="/about" className="text-white text-lg px-4 py-1 transition-colors duration-300 hover:text-gray-500 hover:rounded-md">
-                        About
-                    </a>
-                </li>
-                <li>
                     <a href="/contact" className="text-white text-lg px-4 py-1 transition-colors duration-300 hover:text-gray-500 hover:rounded-md">
                         Contact Us
                     </a>
