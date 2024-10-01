@@ -5,7 +5,7 @@ import logo from '../assets/travel.png'; // Import the image
 
 function Navbar() {
     return (
-        <nav className="absolute top-0 left-0 w-full z-10 bg-black bg-opacity-30 flex justify-between p-3.5">
+        <nav className="absolute top-0 left-0 w-full z-50 bg-black bg-opacity-30 flex justify-between p-3.5">
             {/* Logo Section */}
             <div className="flex items-center w-24">
                 <img src={logo} alt="WanderBlog Logo" className="h-10 w-auto mr-2" />
