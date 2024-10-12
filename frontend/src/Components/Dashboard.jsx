@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import useAuth from '../hooks/useAuth';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGlobe, faPlane, faClock } from '@fortawesome/free-solid-svg-icons';
+
 const DashBoard = () => {
   const { user } = useAuth();
   const [userData, setUserData] = useState({
@@ -30,39 +33,45 @@ const DashBoard = () => {
   }, [user]);
 
   return (
-    <div className="flex flex-col p-5 max-w-[1200px] mx-auto bg-[#f4f4f9] rounded-lg shadow-md">
-      {/* Profile Section */}
-      <div className="flex flex-col mb-5">
-        <div className="flex items-center mb-5">
-          <div className="w-[100px] h-[100px] rounded-full overflow-hidden">
-            <img
-              src={userData.profilePic || '/default-profile.png'}
-              alt="Profile"
-              className="w-full h-full object-cover"
-            />
-          </div>
-          <div className="ml-5 text-lg text-gray-800">
-            <p>Welcome, {userData.firstName}</p>
-          </div>
+    <div className="flex flex-col md:flex-row p-5 max-w-[1200px] max-h-[800px] mx-auto bg-[#f4f4f9] rounded-lg shadow-md mt-[10rem]">
+      {/* Left Profile Section */}
+      <div className="bg-green-600 text-white flex flex-col items-center p-6 pr-2 rounded-lg w-full md:w-1/3 mb-5 md:mb-0 mr-2 ">
+        <div className="w-[100px] h-[100px] rounded-full overflow-hidden mb-4">
+          <img
+            src={userData.profilePic || '/default-profile.png'}
+            alt="Profile"
+            className="w-full h-full object-cover"
+          />
         </div>
-        {/* Account Details */}
-        <div className="bg-white p-5 rounded-lg shadow-md">
-          <h1 className="text-2xl font-bold text-gray-800">
-            {userData.firstName} {userData.lastName}
-          </h1>
-          <p className="text-gray-600">{userData.email}</p>
-          <p className="text-gray-600">{userData.phone}</p>
-          <p className="text-gray-600">Last login: {userData.lastLogin}</p>
-          <button className="bg-blue-600 text-white border-none px-5 py-2 rounded mt-2 hover:bg-blue-700">
-            Edit Profile
-          </button>
+        <h1 className="text-3xl font-bold">{userData.firstName} {userData.lastName}</h1>
+        <p className="mt-2">{userData.email}</p>
+        <p className="mt-2">{userData.phone}</p>
+        <p className="mt-2">Last login: {userData.lastLogin}</p>
+        <button className="bg-white text-green-600 px-5 py-2 rounded mt-4 hover:bg-slate-50 hover:text-teal-400">
+          Edit Profile
+        </button>
+        {/* Icons Section */}
+        <div className="flex mt-6 space-x-4 ">
+          <div className="flex flex-col items-center hover:text-teal-400">
+            <FontAwesomeIcon icon={faGlobe} size="2x" />
+            <p className="mt-1">Travel</p>
+          </div>
+          <div className="flex flex-col items-center  hover:text-teal-400">
+            <FontAwesomeIcon icon={faPlane} size="2x" />
+            <p className="mt-1">Flights</p>
+          </div>
+          <div className="flex flex-col items-center  hover:text-teal-400">
+            <FontAwesomeIcon icon={faClock} size="2x" />
+            <p className="mt-1">Recent</p>
+          </div>
         </div>
       </div>
-      {/* Details Section */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-        {/* History */}
+
+      {/* Right Details Section */}
+      <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-5">
+        {/* History Section */}
         <div className="bg-white p-5 rounded-lg shadow-md">
-          <h3 className="mb-2 text-gray-800">History</h3>
+          <h3 className="text-lg font-bold mb-4">History</h3>
           <ul className="list-none p-0">
             {userData.history.length ? (
               userData.history.map((item, index) => (
@@ -73,9 +82,10 @@ const DashBoard = () => {
             )}
           </ul>
         </div>
-        {/* Wishlist */}
+
+        {/* Wishlist Section */}
         <div className="bg-white p-5 rounded-lg shadow-md">
-          <h3 className="mb-2 text-gray-800">Wishlist</h3>
+          <h3 className="text-lg font-bold mb-4">Wishlist</h3>
           <ul className="list-none p-0">
             {userData.wishlist.length ? (
               userData.wishlist.map((item, index) => (
