@@ -9,8 +9,8 @@ const UserSchema = new mongoose.Schema({
   phone: { type: String, required: true },
   password: { type: String, required: true },
   profilePic: { type: String }, // URL or filename of the profile picture
-});
-
+}); 
+ 
 // Password hashing before saving
 UserSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();

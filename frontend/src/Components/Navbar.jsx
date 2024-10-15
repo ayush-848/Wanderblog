@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import ProfileMenu from './ProfileMenu';
+import ProfileMenu from '../Components/ProfileMenu';
 import logo from '../assets/travel.png'; // Import the image
 
 function Navbar() {

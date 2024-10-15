@@ -63,7 +63,7 @@ const SignUp = () => {
       
       
       <div className="w-full md:w-1/2 lg:w-[50%] max-w-3xl mx-32 py-4">
-        <div className="bg-transparent w-[80%] sm:p-8 p-6 shadow-md rounded-2xl overflow-hidden border-2 inset-0 bg-gray-100 bg-opacity-10 backdrop-blur-md">
+        <div className="bg-transparent w-[80%] sm:p-8 p-6 shadow-md rounded-2xl overflow-hidden border-4 inset-0 bg-gray-100 bg-opacity-10 backdrop-blur-md">
 
           <div className="w-full md:w-[80%] lg:w-[80%] max-w-4xl mx-auto">
             <div className="mb-4 flex items-center">
