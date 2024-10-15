@@ -5,8 +5,7 @@ const DashBoard = () => {
   const { user } = useAuth();
   const [userData, setUserData] = useState({
     profilePic: '',
-    firstName: '',
-    lastName: '',
+    name:'',
     email: '',
     phone: '',
     lastLogin: '',
@@ -18,8 +17,7 @@ const DashBoard = () => {
     if (user) {
       setUserData({
         profilePic: user.profilePic || '',
-        firstName: user.firstName || '',
-        lastName: user.lastName || '',
+        name: user.name || '',
         email: user.email || '',
         phone: user.phone || '',
         lastLogin: user.lastLogin || 'N/A',
@@ -41,7 +39,7 @@ const DashBoard = () => {
           />
         </div>
         <div class='absolute top-1/3'>
-          <h1 className="text-3xl font-bold">{userData.firstName} {userData.lastName}</h1>
+          <h1 className="text-2xl font-bold">{userData.name} </h1>
           <p className="mt-2">{userData.email}</p>
           <p className="mt-2">{userData.phone}</p>
           <p className="mt-2">Last login: {userData.lastLogin}</p>
