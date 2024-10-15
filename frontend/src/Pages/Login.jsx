@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 
+
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -58,7 +59,7 @@ const Login = () => {
           <div className="flex items-center justify-center w-full lg:p-10">
             <div className="flex items-center xl:p-10">
               <form
-                className="flex flex-col w-full h-full pb-6 text-center bg-white border-2 border-solid border-black rounded-3xl p-2"
+                className="flex flex-col w-full h-full p-6 text-center bg-white border-2 border-solid border-black rounded-3xl"
                 onSubmit={handleSubmit}
               >
                 <h3 className="mb-3 text-4xl font-extrabold text-dark-grey-900">SIGN IN</h3>
@@ -81,7 +82,8 @@ const Login = () => {
                   <hr className="h-0 border-b border-solid border-grey-500 grow" />
                 </div>
                 <label htmlFor="email" className="mb-2 text-sm text-start text-grey-900">
-                  Email*
+                  Email
+                  <span className='text-red-600 text-xl'>*</span>
                 </label>
                 <input
                   id="email"
@@ -93,7 +95,8 @@ const Login = () => {
                   className="flex items-center w-full px-5 py-4 mr-2 text-sm font-medium outline-none focus:bg-grey-400 mb-7 placeholder:text-grey-700 bg-grey-200 text-dark-grey-900 rounded-2xl"
                 />
                 <label htmlFor="password" className="mb-2 text-sm text-start text-grey-900">
-                  Password*
+                  Password
+                  <span className='text-red-600 text-xl'>*</span>
                 </label>
                 <input
                   id="password"
@@ -127,11 +130,12 @@ const Login = () => {
                 </div>
                 <button
                   type="submit"
-                  className="w-full px-6 py-5 mb-5 text-sm font-bold leading-none text-white transition duration-300 md:w-96 rounded-2xl hover:bg-purple-blue-600 focus:ring-4 focus:ring-purple-blue-100 bg-purple-blue-500"
+                  className="w-full px-6 py-5 mb-5 text-sm font-bold leading-none text-white transition duration-300 md:w-96 rounded-2xl hover:bg-purple-blue-600 hover:translate-y-down-3 hover:shadow-custom-hover focus:ring-4 focus:ring-purple-blue-200 bg-purple-blue-500"
                   disabled={isLoading}
                 >
                   {isLoading ? 'Signing In...' : 'Sign In'}
                 </button>
+
                 <p className="text-sm leading-relaxed text-grey-900">
                   Not registered yet?
                   <Link to="/signup">

@@ -25,6 +25,13 @@ export default {
           '100%': { opacity: '1' },
         },
       },
+      translate: {
+        'down-3': '-3px',
+      },
+      boxShadow: {
+        'custom-hover': '0 10px 16px rgba(0, 0, 0, 0.2)', // custom box-shadow
+      },
+      
     }
   },
   variants: {},
