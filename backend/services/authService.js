@@ -3,7 +3,7 @@ const { generateToken } = require('../utils/jwt');
 
 exports.register = async (req, res) => {
   try {
-    const { firstName, lastName, email, phone, password } = req.body;
+    const { name, email, phone, password } = req.body;
 
     // Check if user already exists
     const existingUser = await User.findOne({ email });
@@ -11,14 +11,14 @@ exports.register = async (req, res) => {
       return res.status(400).json({ error: 'User with this email already exists' });
     }
 
-    const user = new User({ firstName, lastName, email, phone, password });
+    const user = new User({ name, email, phone, password });
     await user.save();
     const token = generateToken(user._id);
     res.status(201).json({ user: user.toJSON(), token });
   } catch (error) {
     console.error('Registration error:', error);
     res.status(400).json({ error: error.message || 'Registration failed' });
-  }
+  } 
 };
 
 exports.login = async (req, res) => {
@@ -41,7 +41,7 @@ exports.getProfile = async (req, res) => {
 
 exports.updateProfile = async (req, res) => {
   const updates = Object.keys(req.body);
-  const allowedUpdates = ['firstName', 'lastName', 'email', 'phone', 'profilePic'];
+  const allowedUpdates = ['name', 'email', 'phone', 'profilePic'];
   const isValidOperation = updates.every((update) => allowedUpdates.includes(update));
 
   if (!isValidOperation) {
