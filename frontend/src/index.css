@@ -9,3 +9,42 @@
     font-family: 'Montserrat', sans-serif;
 }
 
+
+/*Blog Css styles*/
+@layer components {
+    .input-box {
+      @apply w-full text-sm bg-cyan-600/5 rounded px-5 py-3 mb-4 outline-none;
+    }
+  
+    .btn-primary {
+      @apply w-full text-sm font-medium text-white bg-cyan-500 shadow-lg shadow-cyan-200/50 p-[10px] rounded-full my-1 hover:bg-cyan-100 hover:text-primary;
+    }
+  
+    .btn-light {
+      @apply bg-cyan-50 text-primary shadow-cyan-100/0 border border-cyan-100 hover:bg-primary hover:text-white;
+    }
+  
+    .login-ui-box {
+      @apply w-80 h-[450px] rounded-full bg-primary absolute rotate-45
+    }
+  
+    .icon-btn {
+      @apply text-[22px] text-slate-300 cursor-pointer hover:text-red-500;
+    }
+  
+    .btn-small {
+      @apply flex items-center gap-1 text-xs font-medium bg-cyan-50 text-primary shadow-cyan-100/0 border border-cyan-100 hover:bg-primary hover:text-white rounded px-3 py-[3px];
+    }
+  
+    .btn-delete {
+      @apply bg-rose-50 text-rose-500 shadow-rose-100/0 border border-rose-100 hover:bg-rose-500 hover:text-white;
+    }
+  
+    .model-box {
+      @apply w-[80vw] md:w-[40%] h-[80vh] bg-white rounded-lg mx-auto mt-14 p-5 overflow-y-scroll scrollbar z-50;
+    }
+  
+    .input-label {
+      @apply text-xs text-slate-400;
+    }
+  }

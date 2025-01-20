@@ -1,22 +1,24 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { CgProfile } from "react-icons/cg";
 import useAuth from '../hooks/useAuth';
 import { FaCog, FaSignOutAlt, FaUser, FaPen } from 'react-icons/fa';
+import Logout from "./../Pages/Auth/Logout";
+
 
 function ProfileMenu() {
   const [dropdownVisible, setDropdownVisible] = useState(false);
-  const { isAuthenticated, logout, user } = useAuth();
-  const navigate = useNavigate();
+  const { isAuthenticated, user } = useAuth();
 
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
   };
 
-  const handleLogout = () => {
-    logout();
-    navigate('/login');
-  };
+  const [openLogout, setOpenLogout] = useState(false);
+
+  const handleOpenLogout = () => setOpenLogout(true);
+  const handleCloseLogout = () => setOpenLogout(false);
+
 
   return (  
     <div className="relative flex items-center cursor-pointer">
@@ -54,7 +56,9 @@ function ProfileMenu() {
               Settings
             </Link>
 
-            <button onClick={handleLogout} className="flex items-center w-full text-left px-4 py-3 hover:bg-teal-100">
+            <button 
+              onClick={handleOpenLogout} 
+              className="flex items-center w-full text-left px-4 py-3 hover:bg-teal-100">
               < FaSignOutAlt className='w-[20px] h-[20px] mr-2' />
               Logout
             </button>
@@ -66,6 +70,8 @@ function ProfileMenu() {
           </>
         )}
       </div>
+
+      <Logout open={openLogout} handleClose={handleCloseLogout} />
     </div>
   );
 }
