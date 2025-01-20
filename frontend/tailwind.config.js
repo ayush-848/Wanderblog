@@ -31,7 +31,12 @@ export default {
       boxShadow: {
         'custom-hover': '0 10px 16px rgba(0, 0, 0, 0.2)', // custom box-shadow
       },
-      
+
+      colors: {
+        primary: "#05B6D3",
+        secondary: "#EF863E",
+      },
+    
     }
   },
   variants: {},

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import useAuth from '../hooks/useAuth';
-
+import useAuth from '../../hooks/useAuth';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -9,18 +8,20 @@ const Login = () => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
-  const { login, loginWithToken } = useAuth();
+  const { login } = useAuth();
   const navigate = useNavigate();
 
+  // Handle login form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setIsLoading(true);
 
     try {
-      const token = await login(email, password);
+      const token = await login(email, password); // Assuming `login` returns a token
       console.log('Login successful, navigating to profile');
 
+      // Store token in localStorage or sessionStorage based on rememberMe
       if (rememberMe) {
         localStorage.setItem('token', token);
       } else {
@@ -36,11 +37,12 @@ const Login = () => {
     }
   };
 
+  // Auto-login with token if exists
   useEffect(() => {
     const token = localStorage.getItem('token') || sessionStorage.getItem('token');
 
     if (token) {
-      loginWithToken(token)
+      login(token)
         .then(() => {
           navigate('/profile');
         })
@@ -50,7 +52,7 @@ const Login = () => {
           sessionStorage.removeItem('token');
         });
     }
-  }, [navigate, loginWithToken]);
+  }, [navigate, login]);
 
   return (
     <div className="expt overscroll-none">
@@ -65,6 +67,8 @@ const Login = () => {
                 <h3 className="mb-3 text-4xl font-extrabold text-dark-grey-900">SIGN IN</h3>
                 {error && <div className="error-message">{error}</div>}
                 <p className="mb-4 text-grey-700">Enter your email and password</p>
+
+                {/* Google Sign-In Button */}
                 <button
                   type="button"
                   className="flex items-center justify-center w-full py-4 mb-6 text-sm font-medium transition duration-300 rounded-2xl text-grey-900 bg-grey-300 hover:bg-grey-400 focus:ring-4 focus:ring-grey-300"
@@ -76,14 +80,18 @@ const Login = () => {
                   />
                   Sign in with Google
                 </button>
+
+                {/* Separator */}
                 <div className="flex items-center mb-3">
                   <hr className="h-0 border-b border-solid border-grey-500 grow" />
                   <p className="mx-4 text-grey-600">or</p>
                   <hr className="h-0 border-b border-solid border-grey-500 grow" />
                 </div>
+
+                {/* Email Input */}
                 <label htmlFor="email" className="mb-2 text-sm text-start text-grey-900">
                   Email
-                  <span className='text-red-600 text-xl'>*</span>
+                  <span className="text-red-600 text-xl">*</span>
                 </label>
                 <input
                   id="email"
@@ -94,9 +102,11 @@ const Login = () => {
                   required
                   className="flex items-center w-full px-5 py-4 mr-2 text-sm font-medium outline-none focus:bg-grey-400 mb-7 placeholder:text-grey-700 bg-grey-200 text-dark-grey-900 rounded-2xl"
                 />
+
+                {/* Password Input */}
                 <label htmlFor="password" className="mb-2 text-sm text-start text-grey-900">
                   Password
-                  <span className='text-red-600 text-xl'>*</span>
+                  <span className="text-red-600 text-xl">*</span>
                 </label>
                 <input
                   id="password"
@@ -107,6 +117,8 @@ const Login = () => {
                   required
                   className="flex items-center w-full px-5 py-4 mb-5 mr-2 text-sm font-medium outline-none focus:bg-grey-400 placeholder:text-grey-700 bg-grey-200 text-dark-grey-900 rounded-2xl"
                 />
+
+                {/* Remember Me Checkbox */}
                 <div className="flex flex-row justify-between mb-8">
                   <label className="relative inline-flex items-center mr-3 cursor-pointer select-none">
                     <input
@@ -128,6 +140,8 @@ const Login = () => {
                     Forget password?
                   </button>
                 </div>
+
+                {/* Submit Button */}
                 <button
                   type="submit"
                   className="w-full px-6 py-5 mb-5 text-sm font-bold leading-none text-white transition duration-300 md:w-96 rounded-2xl hover:bg-purple-blue-600 hover:translate-y-down-3 hover:shadow-custom-hover focus:ring-4 focus:ring-purple-blue-200 bg-purple-blue-500"
@@ -136,6 +150,7 @@ const Login = () => {
                   {isLoading ? 'Signing In...' : 'Sign In'}
                 </button>
 
+                {/* Sign-Up Link */}
                 <p className="text-sm leading-relaxed text-grey-900">
                   Not registered yet?
                   <Link to="/signup">

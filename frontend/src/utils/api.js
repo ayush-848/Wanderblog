@@ -1,18 +1,24 @@
-import axios from 'axios';
+import axios from "axios";
 
-const fetchProfile = async () => {
-  const token = localStorage.getItem('token');
+const axiosInstance = axios.create({
+    baseURL: 'http://localhost:3000',
+    timeout: 10000,
+    headers: {
+        "Content-Type": "application/json",
+    },
+});
 
-  try {
-    const response = await axios.get('http://localhost:5000/api/auth/profile', {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-    console.log('Profile data:', response.data);
-    // Handle the profile data
-  } catch (error) {
-    console.error('Error fetching profile:', error);
-    // Handle error
-  }
-};
+axiosInstance.interceptors.request.use(
+    (config) => {
+        const accessToken= localStorage.getItem("token");
+        if(accessToken){
+            config.headers.Authorization= `Bearer ${accessToken}`;
+        }
+        return config;
+    },
+    (error) => {
+        return Promise.reject(error);
+    }
+);
+
+export default axiosInstance;

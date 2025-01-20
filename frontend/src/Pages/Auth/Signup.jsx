@@ -1,9 +1,9 @@
 // src/components/SignUp.js
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import useAuth from '../hooks/useAuth';
-import logo from '../assets/travel.png';
-import signupBg from '../assets/signup_bg.jpg';
+import useAuth from '../../hooks/useAuth';
+import logo from '../../assets/travel.png';
+import signupBg from '../../assets/signup_bg.jpg';
 
 const SignUp = () => {
   const [formData, setFormData] = useState({

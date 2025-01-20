@@ -22,9 +22,9 @@ function Navbar() {
                     </Link>
                 </li>
                 <li>
-                    <a href="/blog" className="text-white text-lg px-4 py-1 transition-colors duration-300 hover:text-gray-500 hover:rounded-md">
+                    <Link to="/blogs" className="text-white text-lg px-4 py-1 transition-colors duration-300 hover:text-gray-500 hover:rounded-md">
                         Blogs
-                    </a>
+                    </Link>
                 </li>
                 <li>
                     <a href="/community" className="text-white text-lg px-4 py-1 transition-colors duration-300 hover:text-gray-500 hover:rounded-md">

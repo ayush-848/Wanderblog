@@ -4,10 +4,11 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { AuthProvider } from './contexts/AuthContext';
 import App from './App.jsx';
 import Profile from './Pages/Profile.jsx';
-import Login from './Pages/Login.jsx';
-import SignUp from './Pages/Signup.jsx';
-import Logout from './Pages/Logout.jsx';
+import Login from './Pages/Auth/Login.jsx';
+import SignUp from './Pages/Auth/Signup.jsx';
+import Logout from './Pages/Auth/Logout.jsx';
 import NotFound from './Pages/NotFound.jsx';
+import BlogsPage from './Pages/Blogs/BlogsPage.jsx';
 import PrivateRoute from './Components/PrivateRoute.jsx';
 import './index.css';
 
@@ -22,6 +23,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Route path="/logout" element={<Logout />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="*" element={<NotFound />} />
+          
+          <Route path="/blogs" element= {<BlogsPage />} />
         </Routes>
       </Router>
     </AuthProvider>

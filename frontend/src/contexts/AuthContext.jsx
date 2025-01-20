@@ -17,10 +17,9 @@ export const AuthProvider = ({ children }) => {
   const fetchUserData = async (token) => {
     try {
       const response = await fetch(`${API_URL}/users/profile`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
+        headers: { 'Authorization': `Bearer ${token}` },
       });
+
       if (response.ok) {
         const userData = await response.json();
         setUser(userData);
@@ -38,12 +37,10 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await fetch(`${API_URL}/users/login`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
       });
-      
+
       if (response.ok) {
         const data = await response.json();
         localStorage.setItem('token', data.token);
@@ -64,25 +61,18 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await fetch(`${API_URL}/users/register`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(userData),
       });
-      
-      console.log('Registration response:', response);
-      console.log('Response status:', response.status);
-      const responseBody = await response.text();
-      console.log('Response body:', responseBody);
 
       if (response.ok) {
-        const data = JSON.parse(responseBody);
+        const data = await response.json();
         localStorage.setItem('token', data.token);
         setUser(data.user);
         setIsAuthenticated(true);
         return true;
       } else {
-        const errorData = JSON.parse(responseBody);
+        const errorData = await response.json();
         throw new Error(errorData.error || 'Registration failed');
       }
     } catch (error) {
@@ -104,7 +94,7 @@ export const AuthProvider = ({ children }) => {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify(updates),
       });
@@ -122,14 +112,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const value = {
-    user,
-    isAuthenticated,
-    login,
-    register,
-    logout,
-    updateProfile,
-  };
+  const value = { user, isAuthenticated, login, register, logout, updateProfile };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
