@@ -1,80 +1,35 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { API_URL } from '../../config';
+import { useClerk } from '@clerk/clerk-react'; // Import Clerk hooks
 
 export const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const { user, signOut, signUp, signIn } = useClerk(); // Clerk hooks
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      fetchUserData(token);
+    // Check if Clerk is loaded and if a user is authenticated
+    if (user) {
+      setIsAuthenticated(true);
     }
-  }, []);
-
-  const fetchUserData = async (token) => {
-    try {
-      const response = await fetch(`${API_URL}/users/profile`, {
-        headers: { 'Authorization': `Bearer ${token}` },
-      });
-
-      if (response.ok) {
-        const userData = await response.json();
-        setUser(userData);
-        setIsAuthenticated(true);
-      } else {
-        logout();
-      }
-    } catch (error) {
-      console.error('Error fetching user data:', error);
-      logout();
-    }
-  };
+  }, [user]);
 
   const login = async (email, password) => {
     try {
-      const response = await fetch(`${API_URL}/users/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        localStorage.setItem('token', data.token);
-        setUser(data.user);
-        setIsAuthenticated(true);
-        return true;
-      } else {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Login failed');
-      }
+      await signIn.create({ emailAddress: email, password });
+      setIsAuthenticated(true);
+      return true;
     } catch (error) {
       console.error('Login error:', error);
       throw error;
     }
   };
 
-  const register = async (userData) => {
+  const register = async (email, password) => {
     try {
-      const response = await fetch(`${API_URL}/users/register`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(userData),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        localStorage.setItem('token', data.token);
-        setUser(data.user);
-        setIsAuthenticated(true);
-        return true;
-      } else {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Registration failed');
-      }
+      await signUp.create({ emailAddress: email, password });
+      // Clerk automatically handles verification link sending, so no need to handle manually
+      return true;
     } catch (error) {
       console.error('Registration error:', error);
       throw error;
@@ -82,30 +37,14 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    localStorage.removeItem('token');
-    setUser(null);
+    signOut();
     setIsAuthenticated(false);
   };
 
   const updateProfile = async (updates) => {
     try {
-      const token = localStorage.getItem('token');
-      const response = await fetch(`${API_URL}/users/profile`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        },
-        body: JSON.stringify(updates),
-      });
-
-      if (response.ok) {
-        const updatedUser = await response.json();
-        setUser(updatedUser);
-        return true;
-      } else {
-        throw new Error('Profile update failed');
-      }
+      await user.updateProfile(updates);
+      return true;
     } catch (error) {
       console.error('Profile update error:', error);
       throw error;
@@ -114,5 +53,6 @@ export const AuthProvider = ({ children }) => {
 
   const value = { user, isAuthenticated, login, register, logout, updateProfile };
 
+  
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
