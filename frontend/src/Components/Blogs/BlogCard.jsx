@@ -3,7 +3,7 @@ import moment from "moment/moment";
 import { FaHeart } from "react-icons/fa6";
 import { GrMapLocation } from "react-icons/gr";
 import { FaEye } from "react-icons/fa";
-import nullImage from '../../assets/null.png'
+import nullImage from '../../../../backend/uploads/placeholder.png'
 
 const BlogCard = ({
 	imageUrl,
@@ -18,13 +18,16 @@ const BlogCard = ({
 	views,
 
 }) => {
+	const imageSrc = imageUrl && imageUrl !== 'null' ? imageUrl : nullImage;
+
 	return (
 		<div className="border rounded-lg overflow-hidden bg-white hover:shadow-slate-200 transition-all ease-in-out relative cursor-poiner mx-auto">
 			<img
-				src={imageUrl || nullImage}
+				src={imageSrc}
 				alt={title}
-				className="w-full h-100 max-w-[502px] max-h-[300px]object-cover rounded-lg"
+				className="w-full h-100 min-h-[265px] max-w-[502px] max-h-[300px] object-cover rounded-lg"
 				onClick={onClick}
+				onError={(e) => e.target.src = nullImage}
 			/>
 
 			<button

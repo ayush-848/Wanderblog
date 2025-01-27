@@ -1,7 +1,7 @@
 import React from 'react';
 import Navbar from '../Components/Navbar';
 import Profile_bg from '../assets/Profile_bg3.png';
-import DashBoard from '../Components/Dashboard';
+import DashBoard from '../Components/Profile/Dashboard';
 
 function Profile() {
     return (

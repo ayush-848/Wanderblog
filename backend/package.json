@@ -12,6 +12,7 @@
   "license": "ISC",
   "description": "Backend server for handling user authentication and file uploads",
   "dependencies": {
+    "@clerk/express": "^1.3.40",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",

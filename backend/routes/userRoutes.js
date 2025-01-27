@@ -1,11 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const authService = require('../services/authService');
-const auth = require('../middlewares/auth');
+const profileService = require('../services/profileService')
+const { requireAuth } = require('@clerk/express')
 
-router.post('/register', authService.register);
-router.post('/login', authService.login);
-router.get('/profile', auth, authService.getProfile);
-router.put('/profile', auth, authService.updateProfile);
+
+router.get('/profile', requireAuth(), profileService.getProfile);
+router.put('/profile', requireAuth(), profileService.updateProfile);
 
 module.exports = router;

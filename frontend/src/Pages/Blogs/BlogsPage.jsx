@@ -8,11 +8,15 @@ import Modal from 'react-modal'
 import { MdAdd } from "react-icons/md";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import NoBlog from "./NoBlog";
+import { useClerk } from "@clerk/clerk-react";
+import Loader from "../../Components/Loader";
 
 const BlogsPage = () => {
 	const [blogs, setBlogs] = useState([]);
 	const [error, setError] = useState(false);
-	const [loading, setLoading] = useState(false);
+	const [isPageLoading, setIsPageLoading] = useState(true); // Manage page loading state
+	const { user, session } = useClerk();
 
 	const [openAddEditModal, setOpenAddEditModal] = useState({
 		isShown: false,
@@ -26,32 +30,33 @@ const BlogsPage = () => {
 	});
 
 	const fetchAllBlogs = async () => {
+
 		try {
-			const response = await axiosInstance.get("/get-all-blogs");
+			const token = await session.getToken();
+
+			const response = await axiosInstance.get("/blogs/get-all-blogs",
+				{
+					headers: {
+						Authorization: `Bearer ${token}`, // Include the token in the Authorization header
+					},
+				}
+			);
+
 			if (response.data && response.data.blogs) {
 				setBlogs(response.data.blogs);
 			}
+			else {
+				setBlogs([]);
+			}
+
 		} catch (error) {
-			console.error("An unexpected error occurred:", error);
+			console.error("An unexpected error occurred while fetching blogs:", error);
+			toast.error("Failed to fetch blogs. Please try again later.");
 			setError(true);
 		} finally {
-			setLoading(false);
-		}
-	};
-
-	const handleEdit = () => {
-		setOpenAddEditModal({ isShown: true, type: "edit", data: data });
-	};
-
-	const handleViewStory = async (data) => {
-		setOpenViewModal({ isShown: true, data });
-
-		try {
-			await axiosInstance.put(`/update-view-count/${data._id}`);
-			fetchAllBlogs();
-		}
-		catch (error) {
-			console.error("Failed to update view count:", error);
+			setTimeout(() => {
+				setIsPageLoading(false);
+			}, 1000);
 		}
 	};
 
@@ -59,34 +64,95 @@ const BlogsPage = () => {
 		const blogId = blogData._id;
 
 		try {
+			const token = await session.getToken();
 			const response = await axiosInstance.put(
-				"/update-is-favourite/" + blogId, {
-					isFavourite: !blogData.isFavourite,
+				`/blogs/update-is-favourite/${blogId}`,
+				{ isFavourite: !blogData.isFavourite },
+				{
+					headers: {
+						Authorization: `Bearer ${token}`, // Include the token in the Authorization header
+					},
 				}
 			);
 
 			if (response.data && response.data.story) {
-				// Update the like count based on whether it's being favorited or unfavorited
-				if(blogData.isFavourite){
-					await axiosInstance.put(`/update-like-count/${blogId}`, { increase: false });
-				}
-				else {
-					await axiosInstance.put(`/update-like-count/${blogId}`, { increase: true });
-				}
-				
-				toast.success("Story Updated Successfully");
+				await axiosInstance.put(`/blogs/update-like-count/${blogId}`, {
+					increase: !blogData.isFavourite,
+				});
+				toast.success("Story updated successfully.");
 				fetchAllBlogs();
 			}
 		} catch (error) {
-			console.log("An unexpected error occured. Please try again.");
+			console.error("Failed to update the favorite status:", error);
+			toast.error("Failed to update the favorite status. Please try again later.");
 		}
 	};
 
-	useEffect(() => {
-		fetchAllBlogs();
+	const handleEdit = (data) => {
+		setOpenAddEditModal({ isShown: true, type: "edit", data });
+	};
 
-		return () => { };
-	}, []);
+	const handleViewStory = async (data) => {
+		setOpenViewModal({ isShown: true, data });
+
+		try {
+			await axiosInstance.put(`/blogs/update-view-count/${data._id}`);
+			fetchAllBlogs();
+		}
+		catch (error) {
+			console.error("Failed to update view count:", error);
+		}
+	};
+
+	const deleteBlog = async (data) => {
+		const blogId = data._id;
+
+		try {
+			const token = await session.getToken();
+			const response = await axiosInstance.delete("/blogs/delete-blog/" + blogId,
+				{
+					headers: {
+						Authorization: `Bearer ${token}`, // Include the token in the Authorization header
+					},
+				}
+			)
+
+			if (response.data && !response.data.error) {
+				toast.error("Story Deleted Successfully");
+				setOpenViewModal((prevState) => ({
+					...prevState,
+					isShown: false,
+				}));
+
+				fetchAllBlogs();
+			}
+		}
+		catch (error) {
+			if (
+				error.response &&
+				error.response.data &&
+				error.response.data.message
+			) {
+				setError(error.response.data.message);
+			}
+			else {
+				//handle unexprected errors
+				setError("An unexpected error occured. PLease try again");
+			}
+		}
+	}
+
+	useEffect(() => {
+		if (user && session) {
+			fetchAllBlogs();
+			setIsPageLoading(false);
+		}
+
+	}, [user, session]);
+
+	if (isPageLoading) {
+		return <Loader />
+	}
 
 	if (error) {
 		return (
@@ -98,53 +164,12 @@ const BlogsPage = () => {
 
 	if (blogs.length === 0) {
 		return (
-			<div className="flex flex-col justify-center items-center mt-20">
-				<p className="text-xl"> No Blogs Found!</p>
-				<p className="text-xl mt-4">Let's create some Blog !</p>
-
-				<button
-					className="bg-red-400 hover:bg-red-600 transition duration-300 text-white px-4 py-3 text-xl rounded-md cursor-pointer mt-6"
-					onClick={() => {
-						setOpenAddEditModal({
-							isShown: true,
-							type: "add",
-							data: null,
-						});
-					}}
-				>
-					Create Blog
-				</button>
-
-				{/* Conditionally render AddEditBlog */}
-				{openAddEditModal.isShown && (
-					<Modal
-						isOpen={openAddEditModal.isShown} // Changed isOpen to open
-						onRequestClose={() => { }}
-						style={{
-							overlay: {
-								backgroundColor: "rgba(0,0,0,0.5)",
-								zIndex: 999,
-							},
-						}}
-						appElement={document.getElementById("root")}
-						className="w-[80vw] md:w-[40%] h-[80vh] bg-white rounded-lg mx-auto mt-14 p-5 overflow-y-scroll scrollbar z-50"
-					>
-						<AddEditBlog
-							type={openAddEditModal.type}
-							storyInfo={openAddEditModal.data}
-							onClose={() =>
-								setOpenAddEditModal({
-									isShown: false,
-									type: "add",
-									data: null,
-								})
-							}
-							getAllBlogs={fetchAllBlogs}
-						/>
-					</Modal>
-				)}
-			</div>
-		);
+			<NoBlog
+				openAddEditModal={openAddEditModal}
+				setOpenAddEditModal={setOpenAddEditModal}
+				fetchAllBlogs={fetchAllBlogs}
+			/>
+		)
 	}
 
 	return (
@@ -192,7 +217,7 @@ const BlogsPage = () => {
 
 			<Modal
 				isOpen={openAddEditModal.isShown}
-				onRequestClose={() => { }}
+				onRequestClose={() => setOpenAddEditModal({ isShown: false, type: "add", data: null })}
 				style={{
 					overlay: {
 						backgroundColor: "rgba(0,0,0,0.2)",
@@ -218,7 +243,7 @@ const BlogsPage = () => {
 
 			<Modal
 				isOpen={openViewModal.isShown}
-				onRequestClose={() => { }}
+				onRequestClose={() => setOpenAddEditModal({ isShown: false, type: "add", data: null })}
 				style={{
 					overlay: {
 						backgroundColor: "rgba(0,0,0,0.2)",
@@ -243,22 +268,11 @@ const BlogsPage = () => {
 						}));
 						handleEdit(openViewModal.data || null);
 					}}
-					onDeleteClick={() => { }}
+					onDeleteClick={() => {deleteBlog(openViewModal.data)}}
 				/>
 			</Modal>
 
-			<button
-				className="w-16 h-16 flex items-center justify-center rounded-full bg-primary hover:bg-cyan-400 fixed right-10 bottom-10"
-				onClick={() => {
-					setOpenAddEditModal({
-						isShown: true,
-						type: "add",
-						data: null,
-					});
-				}}
-			>
-				<MdAdd className="text-[32px] text-white" />
-			</button>
+			
 
 			<ToastContainer />
 		</>
