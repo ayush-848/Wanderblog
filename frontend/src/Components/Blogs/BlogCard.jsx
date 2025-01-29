@@ -1,9 +1,9 @@
-import React from 'react'
+import React from 'react';
 import moment from "moment/moment";
 import { FaHeart } from "react-icons/fa6";
 import { GrMapLocation } from "react-icons/gr";
 import { FaEye } from "react-icons/fa";
-import nullImage from '../../../../backend/uploads/placeholder.png'
+import nullImage from '../../../../backend/uploads/placeholder.png';
 
 const BlogCard = ({
 	imageUrl,
@@ -16,18 +16,18 @@ const BlogCard = ({
 	onClick,
 	likes,
 	views,
-
 }) => {
-	const imageSrc = imageUrl && imageUrl !== 'null' ? imageUrl : nullImage;
+	// Use the placeholder image if imageUrl is null or invalid
+	
 
 	return (
-		<div className="border rounded-lg overflow-hidden bg-white hover:shadow-slate-200 transition-all ease-in-out relative cursor-poiner mx-auto">
+		<div className="border rounded-lg overflow-hidden bg-white hover:shadow-slate-200 transition-all ease-in-out relative cursor-pointer mx-auto">
 			<img
-				src={imageSrc}
+				src={imageUrl}
 				alt={title}
 				className="w-full h-100 min-h-[265px] max-w-[502px] max-h-[300px] object-cover rounded-lg"
 				onClick={onClick}
-				onError={(e) => e.target.src = nullImage}
+				// Fallback to placeholder image if the image fails to load
 			/>
 
 			<button
@@ -40,7 +40,7 @@ const BlogCard = ({
 			</button>
 
 			<div className="p-4" onClick={onClick}>
-				<div className="flex-items-center gap-3">
+				<div className="flex items-center gap-3">
 					<div className="flex-1">
 						<h6 className="text-sm font-medium">{title}</h6>
 						<span className="text-xs text-slate-500">
@@ -61,20 +61,16 @@ const BlogCard = ({
 								? `${item}`
 								: `${item}, `
 						)}
-
-
 					</div>
 
 					<div className='inline-flex items-center gap-2 text-[14px] bg-cyan-200/40 rounded mt-3 px-2 py-1'>
 						<FaEye className='text-sm text-slate-900' /> {views}
-
 						<FaHeart className='text-sm text-red-500' /> {likes}
 					</div>
 				</div>
-
 			</div>
 		</div>
-	)
-}
+	);
+};
 
-export default BlogCard
+export default BlogCard;

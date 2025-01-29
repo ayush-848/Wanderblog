@@ -170,8 +170,8 @@ const AddEditBlog = ({
         }
     };
 
-    const backendUrl = import.meta.env.VITE_API_URL || "http://localhost:3000";
-    const defaultImage = storyImg || `${backendUrl}/uploads/placeholder.png`;
+    
+    const defaultImage = storyImg || '';
 
     return (
         <div className='relative'>

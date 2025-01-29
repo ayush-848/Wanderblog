@@ -162,7 +162,7 @@ exports.imageUpload = async (req, res) => {
             imageUrl = `${backendUrl}/uploads/${req.file.filename}`;
         } else {
             // If no image uploaded, use a default placeholder image URL
-            imageUrl = `${backendUrl}/assets/placeholder.png`;
+            imageUrl = `${backendUrl}/uploads/placeholder.png`;
         }
 
         // Respond with the image URL
