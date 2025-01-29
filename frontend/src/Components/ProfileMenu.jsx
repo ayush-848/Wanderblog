@@ -47,7 +47,7 @@ function ProfileMenu() {
             My Profile
           </Link>
 
-          <Link to='/create-blog' className="flex items-center px-4 py-3 hover:bg-teal-100">
+          <Link to='/my-blogs' className="flex items-center px-4 py-3 hover:bg-teal-100">
             < FaBookOpen className='w-[20px] h-[20px] mr-2' />
             My Blogs
           </Link>

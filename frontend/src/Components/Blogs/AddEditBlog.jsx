@@ -4,9 +4,9 @@ import axiosInstance from '../../utils/api';
 import moment from 'moment';
 import { toast } from 'react-toastify';
 import uploadImage from '../../utils/uploadImage';
-import DateSelector from "./../../Components/Blogs/DateSelector";
-import ImageSelector from "./../../Components/Blogs/ImageSelector";
-import TagInput from '../../Components/Blogs/TagInput';
+import DateSelector from "./DateSelector";
+import ImageSelector from "./ImageSelector";
+import TagInput from './TagInput';
 import { useClerk } from '@clerk/clerk-react'
 
 const AddEditBlog = ({

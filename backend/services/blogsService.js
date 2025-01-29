@@ -15,6 +15,18 @@ exports.getAllBlogs = async (req, res) => {
     }
 };
 
+//get all blogs of all users for main feed
+exports.getAllBlogsFeed = async (req, res) => {
+    try {
+        const blogs = await Blogs.find().sort({ views: -1 });
+        res.status(200).json({ blogs: blogs });
+    }
+    catch (error) {
+        console.error('Error fetching blogs: ', error);
+        res.status(500).json({message: 'Failed to fetch blogs', error: error.message})
+    }
+}
+
 // Add a new blog story
 exports.addBlogStory = async (req, res) => {
     const { title, story, visitedLocation, imageUrl, visitedDate } = req.body;
@@ -72,46 +84,6 @@ exports.editBlogStory = async (req, res) => {
 
         await blogStory.save();
         res.status(200).json({ story: blogStory, message: "Update Successful" });
-    } catch (error) {
-        res.status(500).json({ error: true, message: error.message });
-    }
-};
-
-// Image upload endpoint
-exports.imageUpload = async (req, res) => {
-    try {
-        if (!req.file) {
-            return res.status(400).json({ error: true, message: "Image file is required" });
-        }
-
-        let imageUrl = req.file
-            ? `${backendUrl}/uploads/${req.file.filename}`
-            : `${backendUrl}/uploads/placeholder.png`;
-
-        res.status(201).json({ imageUrl });
-    } catch (error) {
-        res.status(500).json({ error: true, message: error.message });
-    }
-};
-
-// Delete image endpoint
-exports.deleteImage = async (req, res) => {
-    const { imageUrl } = req.query;
-
-    if (!imageUrl) {
-        return res.status(400).json({ error: true, message: "imageUrl parameter is required" });
-    }
-
-    try {
-        const filename = path.basename(imageUrl);
-        const filePath = path.join(__dirname, "uploads", filename);
-
-        await fs.access(filePath).catch(() => {
-            return res.status(404).json({ error: true, message: "Image not found" });
-        });
-
-        await fs.unlink(filePath);
-        res.status(200).json({ message: "Image Deleted Successfully" });
     } catch (error) {
         res.status(500).json({ error: true, message: error.message });
     }

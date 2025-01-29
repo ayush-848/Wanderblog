@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "./../../Components/Navbar";
-import BlogCard from "../../Components/Blogs/BlogCard";
-import axiosInstance from "../../utils/api";
-import AddEditBlog from "./AddEditBlog";
-import ViewBlog from "./ViewBlog";
+import Navbar from "../Components/Navbar";
+import BlogCard from "../Components/Blogs/BlogCard";
+import axiosInstance from "../utils/api";
+import AddEditBlog from "../Components/Blogs/AddEditBlog";
+import ViewBlog from "../Components/Blogs/ViewBlog";
 import Modal from 'react-modal'
-import { MdAdd } from "react-icons/md";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import NoBlog from "./NoBlog";
+import NoBlog from "../Components/Blogs/NoBlog";
 import { useClerk } from "@clerk/clerk-react";
-import Loader from "../../Components/Loader";
+import Loader from "../Components/Loader";
 
 const BlogsPage = () => {
 	const [blogs, setBlogs] = useState([]);

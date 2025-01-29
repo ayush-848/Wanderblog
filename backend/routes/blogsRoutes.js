@@ -29,4 +29,6 @@ router.post("/image-upload", upload.single('image'), blogsService.imageUpload);
 router.delete("/delete-image", blogsService.deleteImage);
 router.delete("/delete-blog/:id", checkAuth, blogsService.deleteBlog);
 
+router.get('/blogs-feed', checkAuth, blogsService.getAllBlogsFeed);
+
 module.exports= router;
