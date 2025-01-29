@@ -4,9 +4,10 @@ import axiosInstance from '../../utils/api';
 import moment from 'moment';
 import { toast } from 'react-toastify';
 import uploadImage from '../../utils/uploadImage';
-import DateSelector from "./../../Components/Blogs/DateSelector";
-import ImageSelector from "./../../Components/Blogs/ImageSelector";
-import TagInput from '../../Components/Blogs/TagInput';
+import DateSelector from "./DateSelector";
+import ImageSelector from "./ImageSelector";
+import TagInput from './TagInput';
+import { useClerk } from '@clerk/clerk-react'
 
 const AddEditBlog = ({
     storyInfo,
@@ -20,6 +21,7 @@ const AddEditBlog = ({
     const [visitedDate, setVisitedDate] = useState(storyInfo?.visitedDate || null);
 
     const [error, setError] = useState("");
+    const { user, session } = useClerk();
 
     const addNewBlog = async () => {
         try {
@@ -32,19 +34,28 @@ const AddEditBlog = ({
                 imageUrl = imgUploadRes.imageUrl || "";
             }
 
-            const response = await axiosInstance.post("/add-blog-story", {
+            const token = await session.getToken();
+            const userId = user.id;
+            const response = await axiosInstance.post("/blogs/add-blog-story", {
                 title, story, imageUrl: imageUrl || "",
-                visitedLocation,
+                visitedLocation, userId,
                 visitedDate: visitedDate
                     ? moment(visitedDate).valueOf()
                     : moment().valueOf(),
-            });
+            },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`, // Include the token in the Authorization header
+                    },
+                }
+            );
 
             if (response.data && response.data.story) {
                 toast.success("Story Added Successfully");
-                getAllBlogs();
                 //close modal or form
                 onClose();
+                getAllBlogs();
+
             }
         }
         catch (error) {
@@ -82,10 +93,16 @@ const AddEditBlog = ({
                     imageUrl: imageUrl,
                 };
             }
-
+            
+            const token = await session.getToken();
             const response = await axiosInstance.put(
-                "/edit-blog-story/" + storyId,
-                postData
+                "/blogs/edit-blog-story/" + storyId,
+                postData, 
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`, // Include the token in the Authorization header
+                    },
+                }
             );
 
             if (response.data && response.data.story) {
@@ -114,12 +131,8 @@ const AddEditBlog = ({
     const handleAddUpdate = () => {
         console.log("Input Data:", { title, storyImg, story, visitedLocation, visitedDate });
 
-        if (!title) {
-            setError("Please enter the title"); return;
-        }
-
-        if (!story) {
-            setError("Please enter the story"); return;
+        if (!title || !story) {
+            setError("Please enter the title or story"); return;
         }
 
         setError("");
@@ -135,7 +148,7 @@ const AddEditBlog = ({
     //Delete story image and update the story
     const handleDeleteStoryImg = async () => {
         try {
-            const deleteImgRes = await axiosInstance.delete("/delete-image", {
+            const deleteImgRes = await axiosInstance.delete("/blogs/delete-image", {
                 params: { imageUrl: storyInfo.imageUrl },
             });
 
@@ -157,6 +170,8 @@ const AddEditBlog = ({
         }
     };
 
+    const backendUrl = import.meta.env.VITE_API_URL || "http://localhost:3000";
+    const defaultImage = storyImg || `${backendUrl}/uploads/placeholder.png`;
 
     return (
         <div className='relative'>
@@ -206,7 +221,7 @@ const AddEditBlog = ({
                     </div>
 
                     <ImageSelector
-                        image={storyImg}
+                        image={defaultImage}
                         setImage={setStoryImg}
                         handleDeleteImg={handleDeleteStoryImg}
                     />

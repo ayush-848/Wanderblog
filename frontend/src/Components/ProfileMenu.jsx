@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CgProfile } from "react-icons/cg";
-import { FaCog, FaSignOutAlt, FaUser, FaPen } from 'react-icons/fa';
+import { FaCog, FaSignOutAlt, FaUser, FaBookOpen } from 'react-icons/fa';
 import Logout from "../Pages/Logout";
 import { SignedIn, SignedOut, SignInButton, SignUpButton, useUser } from '@clerk/clerk-react';
 
@@ -47,9 +47,9 @@ function ProfileMenu() {
             My Profile
           </Link>
 
-          <Link to='/create-blog' className="flex items-center px-4 py-3 hover:bg-teal-100">
-            < FaPen className='w-[20px] h-[20px] mr-2' />
-            Create Blog
+          <Link to='/my-blogs' className="flex items-center px-4 py-3 hover:bg-teal-100">
+            < FaBookOpen className='w-[20px] h-[20px] mr-2' />
+            My Blogs
           </Link>
 
           <Link to='/settings' className="flex items-center px-4 py-3 hover:bg-teal-100">
@@ -71,7 +71,7 @@ function ProfileMenu() {
           </SignInButton>
 
           <SignUpButton>
-            <button className='block px-4 py-3 hover:bg-teal-100'>Signup</button>
+            <div className='block px-4 py-3 hover:bg-teal-100'>Signup</div>
           </SignUpButton>
         </SignedOut>
 

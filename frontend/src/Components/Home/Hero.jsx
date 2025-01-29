@@ -1,5 +1,5 @@
 import React from 'react';
-import Cover from '../assets/cover.jpg'
+import Cover from '../../assets/cover.jpg'
 import { ChevronRight } from 'lucide-react';
 
 const Hero = () => {

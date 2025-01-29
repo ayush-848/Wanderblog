@@ -8,8 +8,8 @@ import App from './App.jsx';
 import Profile from './Pages/Profile.jsx';
 import Logout from './Pages/Logout.jsx';
 import NotFound from './Pages/NotFound.jsx';
-import BlogsPage from './Pages/Blogs/BlogsPage.jsx';
-import PrivateRoute from './Components/PrivateRoute.jsx';
+import BlogsPage from './Pages/MyBlogsPage.jsx';
+import BlogsFeed from './Pages/BlogsFeed.jsx';
 import './index.css';
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
@@ -19,22 +19,20 @@ if (!PUBLISHABLE_KEY) {
 }
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
     <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
       <AuthProvider>
         <Router>
           <Routes>
             <Route path="/" element={<App />} />
-            <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
+            <Route path="/profile" element={<Profile />} />
             <Route path="/logout" element={<Logout />} />
             <Route path="*" element={<NotFound />} />
 
-            <Route path="/blogs" element={<BlogsPage />} />
+            <Route path="/blogs" element={<BlogsFeed />} />
+            <Route path='/my-blogs' element={<BlogsPage />}/>
           </Routes>
         </Router>
       </AuthProvider>
     </ClerkProvider>
-
-  </React.StrictMode>
 );
 

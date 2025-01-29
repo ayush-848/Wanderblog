@@ -1,22 +1,22 @@
-import axiosInstance from '../utils/api'
+import axiosInstance from "./api";
 
-const uploadImage= async(imageFile) => {
-    const formData= new FormData();
-    //append imagge file to form data
-    formData.append('image', imageFile);
+const uploadImage = async (file) => {
+    const formData = new FormData();
+    formData.append('image', file);
 
-    try{
-        const response= await axiosInstance.post('/image-upload', formData, {
+    try {
+        const response = await axiosInstance.post('/blogs/image-upload',
+            formData, {
             headers: {
-                'Content-Type': 'multipart/form-data', //set header for file upload
+                'Content-Type': 'multipart/form-data',
             },
         });
 
+        console.log('Image uploaded successfully:', response.data);
         return response.data;
-
-    } catch(error) {
-        console.error('Error uploading the image:', error);
-        throw error;    //rethrow error for handling
+    } catch (error) {
+        console.error('Error uploading image:', error.response?.data || error.message);
+        throw error;
     }
 };
 

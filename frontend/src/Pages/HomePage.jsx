@@ -1,9 +1,9 @@
 import React from 'react';
-import FeatureCard from '../Components/FeatureCard';
+import FeatureCard from '../Components/Home/FeatureCard';
 import Navbar from '../Components/Navbar';
-import Hero from '../Components/Hero';
-import SeasonalTravelTimeline from '../Components/SeasonalTravelTimeline';
-import Footer from '../Components/Footer';
+import Hero from '../Components/Home/Hero';
+import SeasonalTravelTimeline from '../Components/Home/SeasonalTravelTimeline';
+import Footer from '../Components/Home/Footer';
 
 const HomePage = () => {
     return (
