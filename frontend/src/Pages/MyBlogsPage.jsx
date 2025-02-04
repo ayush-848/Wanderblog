@@ -10,6 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 import NoBlog from "../Components/Blogs/NoBlog";
 import { useClerk } from "@clerk/clerk-react";
 import Loader from "../Components/Loader";
+import deleteImage from "./../utils/deleteImage";
 
 const BlogsPage = () => {
 	const [blogs, setBlogs] = useState([]);
@@ -105,41 +106,51 @@ const BlogsPage = () => {
 
 	const deleteBlog = async (data) => {
 		const blogId = data._id;
-
+		const fileId = data.fileId;
+	
 		try {
 			const token = await session.getToken();
-			const response = await axiosInstance.delete("/blogs/delete-blog/" + blogId,
-				{
-					headers: {
-						Authorization: `Bearer ${token}`, // Include the token in the Authorization header
-					},
+	
+			if (!token) {
+				toast.error("Authentication failed. Please log in again.");
+				return;
+			}
+	
+			// Step 1: Delete Image (if exists)
+			if (fileId) {
+				const imageDeleted = await deleteImage(fileId);
+				if (!imageDeleted) {
+					console.warn("Image deletion failed. Proceeding to delete blog.");
 				}
-			)
-
+			}
+	
+			// Step 2: Delete Blog
+			const response = await axiosInstance.delete(`/blogs/delete-blog/${blogId}`, {
+				headers: { Authorization: `Bearer ${token}` },
+			});
+	
 			if (response.data && !response.data.error) {
 				toast.error("Story Deleted Successfully");
-				setOpenViewModal((prevState) => ({
-					...prevState,
-					isShown: false,
-				}));
-
+				setOpenViewModal((prevState) => ({ ...prevState, isShown: false }));
 				fetchAllBlogs();
 			}
-		}
-		catch (error) {
+			
+		} catch (error) {
 			if (
 				error.response &&
 				error.response.data &&
 				error.response.data.message
-			) {
+			  ) {
+				console.error(error.response.data.message);
 				setError(error.response.data.message);
-			}
-			else {
+			  }
+			  else {
 				//handle unexprected errors
 				setError("An unexpected error occured. PLease try again");
-			}
+			  }
 		}
-	}
+	};
+	
 
 	useEffect(() => {
 		if (user && session) {
@@ -267,11 +278,11 @@ const BlogsPage = () => {
 						}));
 						handleEdit(openViewModal.data || null);
 					}}
-					onDeleteClick={() => {deleteBlog(openViewModal.data)}}
+					onDeleteClick={() => { deleteBlog(openViewModal.data) }}
 				/>
 			</Modal>
 
-			
+
 
 			<ToastContainer />
 		</>

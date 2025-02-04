@@ -2,6 +2,8 @@ const fs = require("fs/promises");
 const path = require("path");
 const Blogs = require("../models/Blogs"); // Adjust import based on your setup
 const backendUrl = process.env.VITE_API_URL || "http://localhost:3000";
+const axios = require('axios')
+require('dotenv').config();
 
 // Get all blogs for the authenticated user
 exports.getAllBlogs = async (req, res) => {
@@ -29,11 +31,11 @@ exports.getAllBlogsFeed = async (req, res) => {
 
 // Add a new blog story
 exports.addBlogStory = async (req, res) => {
-    const { title, story, visitedLocation, imageUrl, visitedDate } = req.body;
+    const { title, story, visitedLocation, imageUrl, visitedDate, fileId } = req.body;
     const { userId } = req.auth;
 
 
-    if (!title || !story || !visitedLocation || !imageUrl || !visitedDate) {
+    if (!title || !story) {
         return res.status(400).json({ error: true, message: "All fields are required" });
     }
 
@@ -47,6 +49,7 @@ exports.addBlogStory = async (req, res) => {
             visitedLocation,
             userId,
             imageUrl,
+            fileId,
             visitedDate: parsedVisitedDate,
         });
 
@@ -60,10 +63,10 @@ exports.addBlogStory = async (req, res) => {
 // Edit an existing blog story
 exports.editBlogStory = async (req, res) => {
     const { id } = req.params;
-    const { title, story, visitedLocation, imageUrl, visitedDate } = req.body;
+    const { title, story, visitedLocation, imageUrl, visitedDate, fileId } = req.body;
     const { userId } = req.auth;
 
-    if (!title || !story || !visitedLocation || !imageUrl || !visitedDate) {
+    if (!title || !story) {
         return res.status(400).json({ error: true, message: "All fields are required" });
     }
 
@@ -80,6 +83,7 @@ exports.editBlogStory = async (req, res) => {
         blogStory.story = story;
         blogStory.visitedLocation = visitedLocation;
         blogStory.imageUrl = imageUrl;
+        blogStory.fileId = fileId,
         blogStory.visitedDate = parsedVisitedDate;
 
         await blogStory.save();
@@ -152,59 +156,13 @@ exports.updateLikeCount = async (req, res) => {
     }
 };
 
-exports.imageUpload = async (req, res) => {
-    try {
-        let imageUrl;
-
-        // Check if an image is uploaded
-        if (req.file) {
-            // If image is uploaded, set the image URL to the uploaded file's path
-            imageUrl = `${backendUrl}/uploads/${req.file.filename}`;
-        } else {
-            // If no image uploaded, use a default placeholder image URL
-            imageUrl = `${backendUrl}/uploads/placeholder.png`;
-        }
-
-        // Respond with the image URL
-        res.status(201).json({ imageUrl });
-    } catch (error) {
-        res.status(500).json({ error: true, message: error.message });
-    }
-}
-
-exports.deleteImage = async (req, res) => {
-    const { imageUrl } = req.query;
-
-    if (!imageUrl) {
-        return res.status(400).json({ error: true, message: "imageUrl parameter is required" });
-    }
-
-    try {
-        // Extract the filename from the imageUrl
-        const filename = path.basename(imageUrl);
-
-        // Define the file path
-        const filePath = path.join(__dirname, 'uploads', filename);
-
-        // Check if file exists
-        if (fs.existsSync(filePath)) {
-            // Delete the file from the uploads folder
-            fs.unlinkSync(filePath);
-            res.status(200).json({ message: "Image deleted successfully " });
-        } else {
-            res.status(200).json({ error: true, message: "Image not found" });
-        }
-    } catch (error) {
-        res.status(500).json({ error: true, message: error.message });
-    }
-}
 
 exports.deleteBlog = async (req, res) => {
-    const { id } = req.params;
+    const { blogId } = req.params;
     const { userId } = req.auth;
 
     try {
-        const blog = await Blogs.findById(id);
+        const blog = await Blogs.findById(blogId);
 
         if (!blog) {
             return res.status(404).json({ error: true, message: "Blog not found" });
@@ -214,7 +172,7 @@ exports.deleteBlog = async (req, res) => {
             return res.status(403).json({ error: true, message: "You are not authorized to delete this story" });
         }
 
-        await Blogs.findByIdAndDelete(id);
+        await Blogs.findByIdAndDelete(blogId);
 
         res.status(200).json({ message: "Story deleted successfully" });
     }

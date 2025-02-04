@@ -61,7 +61,6 @@ app.use((req, res, next) => {
   next();
 });
 
-
 // Serve static files (uploads and frontend dist folder)
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use(express.static(path.join(__dirname, '../frontend/dist')));
@@ -72,6 +71,37 @@ app.use(clerkMiddleware())
 // API Routes
 app.use('/users', userRoutes);
 app.use('/blogs', blogsRoutes);
+
+//profile
+// Proxy route to Clerk API
+app.get('/getUser', async (req, res) => {
+  const userId = req.query.userId; // Get the userId from query parameter
+
+  if (!userId) {
+      return res.status(400).json({ error: 'UserId is required' });
+  }
+
+  const clerkSecretKey = process.env.CLERK_SECRET_KEY;
+
+  try {
+      const response = await fetch(`https://api.clerk.dev/v1/users/${userId}`, {
+          method: 'GET',
+          headers: {
+              'Authorization': `Bearer ${clerkSecretKey}`,
+              'Content-Type': 'application/json',
+          },
+      });
+
+      if (!response.ok) {
+          throw new Error('Error fetching user data');
+      }
+
+      const data = await response.json();
+      res.json(data); // Send the user data to the frontend
+  } catch (error) {
+      res.status(500).json({ error: error.message });
+  }
+});
 
 // Error handling
 app.use((err, req, res, next) => {

@@ -1,27 +1,17 @@
-// backend/models/User.js
-
+// models/User.js
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
 
-const UserSchema = new mongoose.Schema({
-  name: { type: String, required: true },
+const userSchema = new mongoose.Schema({
+  clerkUserId: { type: String, required: true, unique: true }, // Clerk user ID
   email: { type: String, required: true, unique: true },
-  phone: { type: String, required: true },
-  password: { type: String, required: true },
-  profilePic: { type: String }, // URL or filename of the profile picture
-}); 
- 
-// Password hashing before saving
-UserSchema.pre('save', async function (next) {
-  if (!this.isModified('password')) return next();
-  this.password = await bcrypt.hash(this.password, 10);
-  next();
+  username: { type: String },
+  firstName: { type: String },
+  lastName: { type: String },
+  profileImageUrl: { type: String },
+  createdAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date, default: Date.now },
 });
 
-// Method to compare passwords
-UserSchema.methods.comparePassword = async function(candidatePassword) {
-  return bcrypt.compare(candidatePassword, this.password);
-};
+const User = mongoose.model('User', userSchema);
 
-const User = mongoose.model('User', UserSchema);
 module.exports = User;

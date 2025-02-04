@@ -7,13 +7,12 @@ import Navbar from '../Components/Navbar';
 import ViewFeed from '../Components/Blogs/ViewFeed';
 import Modal from 'react-modal';
 import { ToastContainer, toast } from "react-toastify";
-import axios from 'axios';
 
 const BlogsFeed = () => {
     const [blogs, setBlogs] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const { isSignedIn, getToken } = useAuth();
-    const { user } = useClerk();
+    
+    const [isPageLoading, setIsPageLoading] = useState(true); // Manage page loading state
+    const { user, session } = useClerk();
 
     const [openViewModal, setOpenViewModal] = useState({
         isShown: false,
@@ -21,46 +20,37 @@ const BlogsFeed = () => {
     });
 
     const fetchAllBlogs = async () => {
-        if (!isSignedIn) return; // Prevent API call if user is not signed in
-
-        if (blogs.length > 0) return; // Skip if blogs are already fetched
-
-        try {
-            if (user) {
-                setLoading(true); // Ensure loading is set before fetching
-
-                const token = await getToken();
-                const response = await axiosInstance.get('/blogs/blogs-feed', {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
-
-                setBlogs(response.data?.blogs || []); // Ensure an empty array if no blogs found
-            } else {
-                console.error('User or session is missing. Cannot fetch blogs.');
-            }
-        } catch (error) {
-            console.error('Error fetching blogs:', error);
-            toast.error('Failed to fetch blogs. Please try again later.');
-        } finally {
-            setLoading(false); // Stop loading after fetching
-        }
-    };
-
-    const handleViewStory = async (data) => {
-		setOpenViewModal({ isShown: true, data });
 
 		try {
-			await axiosInstance.put(`/blogs/update-view-count/${data._id}`);
-			fetchAllBlogs();
-		}
-		catch (error) {
-			console.error("Failed to update view count:", error);
+			const token = await session.getToken();
+
+			const response = await axiosInstance.get("/blogs/blogs-feed",
+				{
+					headers: {
+						Authorization: `Bearer ${token}`, // Include the token in the Authorization header
+					},
+				}
+			);
+
+			if (response.data && response.data.blogs) {
+				setBlogs(response.data.blogs);
+			}
+			else {
+				setBlogs([]);
+			}
+
+		} catch (error) {
+			console.error("An unexpected error occurred while fetching blogs:", error);
+			toast.error("Failed to fetch blogs. Please try again later.");
+			
+		} finally {
+			setTimeout(() => {
+				setIsPageLoading(false);
+			}, 1000);
 		}
 	};
 
-    const updateIsFavourite = async (blogData) => {
+	const updateIsFavourite = async (blogData) => {
 		const blogId = blogData._id;
 
 		try {
@@ -88,10 +78,30 @@ const BlogsFeed = () => {
 		}
 	};
 
-    useEffect(() => {
-        if (!isSignedIn) return; // Wait for authentication before making API calls
-        fetchAllBlogs();
-    }, [isSignedIn]); // Fetch when user is signed in
+	const handleViewStory = async (data) => {
+		setOpenViewModal({ isShown: true, data });
+
+		try {
+			await axiosInstance.put(`/blogs/update-view-count/${data._id}`);
+			fetchAllBlogs();
+		}
+		catch (error) {
+			console.error("Failed to update view count:", error);
+		}
+	};
+
+
+	useEffect(() => {
+		if (session) {
+			fetchAllBlogs();
+			setIsPageLoading(false);
+		}
+
+	}, [user, session]);
+
+	if (isPageLoading) {
+		return <Loader />
+	}
 
     return (
         <>
@@ -106,13 +116,13 @@ const BlogsFeed = () => {
                 </div>
 
                 {/* Blogs Section */}
-                {loading ? (
+                {isPageLoading ? (
                     <p className="text-center text-teal-500 text-xl">Loading blogs... Hang tight! 🚀</p>
                 ) : blogs.length === 0 ? (
                     <p className="text-center text-gray-600 text-xl">No blogs found. Be the first to share your story! ✨</p>
                 ) : (
                     <>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
                             {blogs.map((blog) => (
                                 <BlogCard
                                     key={blog._id}

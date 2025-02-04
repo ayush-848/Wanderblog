@@ -1,11 +1,34 @@
-import { useClerk } from '@clerk/clerk-react';
 import moment from 'moment';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { GrMapLocation } from 'react-icons/gr';
-import { MdClose } from 'react-icons/md';
+import { MdClose } from 'react-icons/md'
+import axios from 'axios'
 
 const ViewFeed = ({ storyInfo, onClose }) => {
-    const { user } = useClerk();
+    const [username, setUsername] = useState('...');
+    const userId = storyInfo?.userId;
+
+    useEffect(() => {
+        if (userId) {
+            const cachedUser = localStorage.getItem(`user_${userId}`);
+            if (cachedUser) {
+                setUsername(JSON.parse(cachedUser)); // Use cached data
+            } else {
+                const fetchUser = async () => {
+                    try {
+                        const response = await axios.get(`http://localhost:3000/getUser?userId=${userId}`);
+                        setUsername(response.data.username || 'Guest');
+                        localStorage.setItem(`user_${userId}`, JSON.stringify(response.data.username)); // Cache the username
+                    } catch (error) {
+                        console.error('Error fetching user:', error);
+                    }
+                };
+                fetchUser();
+            }
+        }
+    }, [userId]);
+    
+
 
     return (
         <div className='relative'>
@@ -13,7 +36,7 @@ const ViewFeed = ({ storyInfo, onClose }) => {
             <div className='flex justify-between items-center mb-4'>
                 <div className="flex items-center gap-2 bg-green-100 px-3 py-1 rounded-full text-[16px] font-semibold text-sky-700">
                     <span>✍️ Author:</span>
-                    <span>@{user?.username || "Guest"}</span>
+                    <span>@{username}</span>
                 </div>
                 <button
                     className='p-2 hover:bg-red-600 rounded-full transition-all duration-300'
