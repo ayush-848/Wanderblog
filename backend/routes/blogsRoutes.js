@@ -1,14 +1,19 @@
-const express = require("express");
 const blogsService = require("../services/blogsService");
+const mediaService = require('../services/mediaService')
+const express = require("express");
 const router = express.Router();
-const upload = require("../multer");
-const backendUrl = process.env.VITE_API_URL || 'http://localhost:3000';
+
+const multer = require("multer");
+// Configure Multer (for handling file uploads)
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
+
 
 router.use((req, res, next) => {
     console.log("Auth debug:", req.auth); // Should show Clerk session and user data
     next();
   });
-  
+
 const checkAuth = (req, res, next) => {
     console.log("checking if session exists");
 
@@ -25,9 +30,11 @@ router.put("/edit-blog-story/:id", checkAuth, blogsService.editBlogStory);
 router.put("/update-is-favourite/:id", checkAuth, blogsService.updateFavourite);
 router.put("/update-view-count/:id", blogsService.updateViewCount);
 router.put("/update-like-count/:id", blogsService.updateLikeCount);
-router.post("/image-upload", upload.single('image'), blogsService.imageUpload);
-router.delete("/delete-image", blogsService.deleteImage);
-router.delete("/delete-blog/:id", checkAuth, blogsService.deleteBlog);
+router.delete("/delete-blog/:blogId", checkAuth, blogsService.deleteBlog);
+
+router.post("/image-upload", upload.single('image'), mediaService.imageUpload);
+router.delete("/delete-image/:fileId", mediaService.imageDelete);
+
 
 router.get('/blogs-feed', checkAuth, blogsService.getAllBlogsFeed);
 
